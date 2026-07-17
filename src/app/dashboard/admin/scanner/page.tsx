@@ -10,9 +10,27 @@ export default async function ScannerPage() {
     redirect("/dashboard");
   }
 
-  const events = await prisma.event.findMany({
-    orderBy: { date: "desc" }
+  const today = new Date();
+
+  const genericEvents = await prisma.event.findMany({
+    where: { type: { in: ["SYSTEM", "OTHER"] } },
+    orderBy: { title: "asc" }
   });
+
+  const pastMatches = await prisma.event.findMany({
+    where: { type: "MATCH", date: { lte: today } },
+    orderBy: { date: "desc" },
+    take: 1
+  });
+
+  const futureMatches = await prisma.event.findMany({
+    where: { type: "MATCH", date: { gt: today } },
+    orderBy: { date: "asc" },
+    take: 2
+  });
+
+  // Unisce gli eventi e li ordina per data decrescente (mostra le partite per prime)
+  const events = [...pastMatches, ...futureMatches, ...genericEvents];
 
   return (
     <div className="min-h-screen bg-zinc-50 py-12 px-4">
