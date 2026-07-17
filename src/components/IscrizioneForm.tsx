@@ -14,8 +14,8 @@ const formSchema = z.object({
   telefono: z.string().min(5, "Inserire Numero di Telefono"),
   tipoTessera: z.enum(["Adulto", "Ridotto", "Familiare"]),
   metodoPagamento: z.enum(["Contanti", "Stripe"]),
-  accettazionePrivacy: z.literal(true, {
-    errorMap: () => ({ message: "Devi accettare l'informativa" }),
+  accettazionePrivacy: z.boolean().refine((val) => val === true, {
+    message: "Devi accettare l'informativa",
   }),
 });
 
