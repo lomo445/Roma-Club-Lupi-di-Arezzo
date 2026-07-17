@@ -15,6 +15,10 @@ export default async function DashboardPage() {
   const user = session.user as any;
   const isAdmin = user.role === "ADMIN";
 
+  const userAttendances = await prisma.attendance.count({
+    where: { userId: user.id }
+  });
+
   let stats = null;
   if (isAdmin) {
     const totalUsers = await prisma.user.count();
@@ -158,7 +162,7 @@ export default async function DashboardPage() {
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100">
                 <h3 className="text-xl font-bold text-zinc-800 mb-4">Le tue presenze</h3>
                 <div className="text-center py-8 text-zinc-500">
-                  <span className="text-4xl font-bold text-primary block mb-2">0</span>
+                  <span className="text-4xl font-bold text-primary block mb-2">{userAttendances}</span>
                   presenze registrate in questa stagione
                 </div>
               </div>

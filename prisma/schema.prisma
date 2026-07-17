@@ -54,11 +54,25 @@ model Subscription {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Event {
+  id        String       @id @default(uuid())
+  title     String       // "Roma - Juventus", "Presenze Precedenti", "Altri Eventi"
+  date      DateTime     @default(now())
+  type      String       // "MATCH", "SYSTEM", "OTHER"
+  createdAt DateTime     @default(now())
+
+  attendances Attendance[]
+}
+
 model Attendance {
   id        String   @id @default(uuid())
   userId    String
-  eventDate DateTime @default(now())
+  eventId   String
+  createdAt DateTime @default(now())
   notes     String?
   
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
 }
