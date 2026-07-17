@@ -62,8 +62,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="p-4 bg-secondary/20 rounded-xl border border-secondary/30 text-center">
-                <p className="font-bold text-primary">📍 Sede Visiva: Circolo Oasi di Chiani</p>
-                <p className="text-sm text-zinc-700 mt-1">Vieni a vedere le partite sul nostro maxischermo!</p>
+                <p className="font-bold text-primary">📍 Sede Visiva: Circolo Oasi Chiani</p>
+                <p className="text-sm text-zinc-700 mt-1">Vieni a vedere le partite insieme a noi in sede!</p>
               </div>
             </div>
 

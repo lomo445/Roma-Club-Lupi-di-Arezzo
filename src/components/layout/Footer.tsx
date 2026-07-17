@@ -6,7 +6,8 @@ export function Footer() {
           <h3 className="text-xl font-bold mb-4 text-white">Roma Club "Lupi di Arezzo"</h3>
           <p className="text-zinc-400">
             Intitolato a <strong>Romolo Brizzi</strong>.<br/>
-            Sede ufficiale: <strong>Circolo Oasi di Chiani</strong>, Arezzo.
+            Sede ufficiale: <strong>Circolo Oasi Chiani</strong><br/>
+            Ponte a Chiani 1, Arezzo.
           </p>
         </div>
         <div>
@@ -20,8 +21,8 @@ export function Footer() {
         <div>
           <h4 className="text-lg font-semibold text-white mb-4">Contatti</h4>
           <ul className="space-y-2 text-sm">
-            <li>Email: info@lupidarezzo.it</li>
-            <li>Sede: Arezzo, Italia</li>
+            <li>Email: romaclublupidiarezzo@gmail.com</li>
+            <li>Sede: Circolo Oasi Chiani, Ponte a Chiani 1, Arezzo</li>
           </ul>
         </div>
       </div>

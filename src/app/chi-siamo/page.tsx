@@ -56,33 +56,36 @@ export default function ChiSiamo() {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-zinc-800 mb-12">Il Direttivo</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            
-            {/* Membro 1 */}
+            {/* Presidente */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-zinc-100 flex flex-col items-center">
               <div className="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center text-3xl font-bold mb-4">
-                P
+                LR
               </div>
-              <h3 className="text-xl font-bold text-zinc-800">Presidente</h3>
-              <p className="text-primary font-medium text-sm mt-1">Carica Attuale</p>
+              <h3 className="text-xl font-bold text-zinc-800">Leonardo Romanazzo</h3>
+              <p className="text-primary font-medium text-sm mt-1">Presidente</p>
             </div>
 
-            {/* Membro 2 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-zinc-100 flex flex-col items-center">
-              <div className="w-24 h-24 bg-zinc-200 text-zinc-600 rounded-full flex items-center justify-center text-3xl font-bold mb-4">
-                VP
-              </div>
-              <h3 className="text-xl font-bold text-zinc-800">Vice Presidente</h3>
-              <p className="text-zinc-500 font-medium text-sm mt-1">Carica Attuale</p>
-            </div>
-
-            {/* Membro 3 */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-zinc-100 flex flex-col items-center">
-              <div className="w-24 h-24 bg-zinc-200 text-zinc-600 rounded-full flex items-center justify-center text-3xl font-bold mb-4">
-                S
-              </div>
-              <h3 className="text-xl font-bold text-zinc-800">Segretario</h3>
-              <p className="text-zinc-500 font-medium text-sm mt-1">Carica Attuale</p>
-            </div>
+            {/* Membri Direttivo */}
+            {[
+              "Giovanni Lorito", 
+              "Elpidio Monaco", 
+              "Sophia Porchiella", 
+              "Nadia Tellini", 
+              "Massimo Pierfederici", 
+              "Gianluca Brizzi", 
+              "Andrea Germani"
+            ].map((name, idx) => {
+              const initials = name.split(" ").map(n => n[0]).join("");
+              return (
+                <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-zinc-100 flex flex-col items-center">
+                  <div className="w-24 h-24 bg-zinc-200 text-zinc-600 rounded-full flex items-center justify-center text-3xl font-bold mb-4">
+                    {initials}
+                  </div>
+                  <h3 className="text-xl font-bold text-zinc-800">{name}</h3>
+                  <p className="text-zinc-500 font-medium text-sm mt-1">Membro del Direttivo</p>
+                </div>
+              );
+            })}
 
           </div>
           

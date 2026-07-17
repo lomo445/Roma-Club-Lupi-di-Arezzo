@@ -11,6 +11,7 @@ const formSchema = z.object({
   nomeCognome: z.string().min(3, "Inserire Nome e Cognome"),
   dataNascita: z.string().min(8, "Inserire Data di Nascita"),
   luogoNascita: z.string().min(2, "Inserire Luogo di Nascita"),
+  sesso: z.enum(["Maschio", "Femmina", "Altro"], { message: "Selezionare il sesso" }),
   telefono: z.string().min(5, "Inserire Numero di Telefono"),
   tipoTessera: z.enum(["Adulto", "Ridotto", "Familiare"]),
   metodoPagamento: z.enum(["Contanti", "Stripe"]),
@@ -153,8 +154,22 @@ export function IscrizioneForm() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="space-y-6"
+              className="space-y-4"
             >
+              <div>
+                <label className="block text-sm font-bold text-zinc-700 mb-1">Sesso *</label>
+                <select
+                  {...register("sesso")}
+                  className="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                >
+                  <option value="">Seleziona...</option>
+                  <option value="Maschio">Maschio</option>
+                  <option value="Femmina">Femmina</option>
+                  <option value="Altro">Altro / Preferisco non specificare</option>
+                </select>
+                {errors.sesso && <p className="text-red-500 text-sm mt-1">{errors.sesso.message}</p>}
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-zinc-700 mb-3">Scegli il tipo di Tessera *</label>
                 <div className="space-y-3">
@@ -230,7 +245,7 @@ export function IscrizioneForm() {
                     className="mt-1 w-5 h-5 text-primary rounded border-zinc-300 focus:ring-primary"
                   />
                   <span className="ml-3 text-sm text-zinc-700">
-                    Dichiaro di aver letto e accettato la <a href="#" className="text-primary hover:underline">Privacy Policy</a> per il trattamento dei dati personali ai fini del tesseramento.*
+                    Dichiaro di aver letto e accettato la <a href="/privacy" target="_blank" className="text-primary hover:underline font-bold">Privacy Policy</a> per il trattamento dei dati personali ai fini del tesseramento.*
                   </span>
                 </label>
                 {errors.accettazionePrivacy && <p className="text-red-500 text-sm mt-1">{errors.accettazionePrivacy.message}</p>}
