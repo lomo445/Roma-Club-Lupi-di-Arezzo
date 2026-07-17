@@ -5,12 +5,8 @@ export function Navbar() {
     <nav className="bg-primary text-primary-foreground sticky top-0 z-50 w-full border-b border-border/40 shadow-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          {/* Sostituire con next/image e il logo reale */}
-          <div className="bg-secondary text-secondary-foreground font-bold rounded-full w-10 h-10 flex items-center justify-center">
-            LA
-          </div>
-          <span className="font-bold text-xl hidden sm:inline-block">
-            Roma Club Arezzo
+          <span className="text-xl font-black uppercase tracking-tight text-white drop-shadow-sm">
+            Lupi di Arezzo
           </span>
         </Link>
 

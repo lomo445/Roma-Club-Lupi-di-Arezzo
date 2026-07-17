@@ -1,31 +1,42 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-primary text-primary-foreground py-24 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-0"></div> {/* Overlay per leggibilità */}
-        {/* Placeholder per l'immagine di sfondo: si può aggiungere un'immagine reale con next/image e layout="fill" in seguito */}
-        <div className="container mx-auto relative z-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
-            Roma Club <span className="text-secondary">Lupi di Arezzo</span>
+      <section className="relative text-white py-32 px-4 overflow-hidden">
+        <Image 
+          src="/stadio-olimpico.jpg" 
+          alt="Stadio Olimpico Pieno" 
+          fill 
+          priority 
+          className="object-cover z-0" 
+        />
+        <div className="absolute inset-0 bg-black/60 z-0"></div> {/* Overlay per contrasto */}
+        <div className="container mx-auto relative z-10 text-center mt-8">
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 drop-shadow-2xl">
+            LUPI DI AREZZO
           </h1>
-          <p className="text-xl md:text-2xl font-medium mb-10 max-w-2xl mx-auto drop-shadow-md">
-            Romolo Brizzi - La tana dei tifosi giallorossi nel cuore della Toscana.
+          <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-8 drop-shadow-lg uppercase tracking-wide">
+            Roma Club "Romolo Brizzi"
+          </h2>
+          <p className="text-xl md:text-2xl font-medium mb-12 max-w-3xl mx-auto drop-shadow-md leading-relaxed text-zinc-200">
+            La Roma non si discute, si ama. <br/>
+            Unisciti al branco: i posti in sede per le notti di Champions e sul pullman per l'Olimpico <strong className="text-white">vanno a ruba</strong>!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               href="/iscriviti" 
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-lg font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105"
+              className="bg-secondary text-black hover:bg-yellow-400 text-xl font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(255,184,28,0.4)] transition-all hover:scale-105"
             >
-              Tesseramento 25/26
+              Tesseramento 26/27
             </Link>
             <Link 
               href="/chi-siamo" 
-              className="bg-transparent border-2 border-white hover:bg-white/10 text-lg font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105"
+              className="bg-transparent border-2 border-white/80 hover:bg-white/10 text-xl font-bold py-4 px-10 rounded-full shadow-lg transition-all hover:scale-105"
             >
-              Scopri il Club
+              Vieni in Sede
             </Link>
           </div>
         </div>
@@ -36,26 +47,23 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-            {/* Prossima Partita */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-primary">
+            {/* Prossima Partita & Calendario */}
+            <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-primary h-full">
               <h2 className="text-3xl font-bold text-primary mb-6 flex items-center">
-                <span className="bg-primary/10 p-2 rounded-lg mr-4">⚽</span> Prossima Partita
+                <span className="bg-primary/10 p-2 rounded-lg mr-4">🗓</span> Calendario 2026/2027
               </h2>
-              <div className="flex flex-col items-center justify-center p-6 bg-zinc-50 rounded-xl border border-zinc-100">
-                <div className="text-sm font-semibold text-zinc-500 mb-4 uppercase tracking-wider">
-                  Serie A - Prossimo Turno
+              <div className="flex flex-col items-center justify-center p-6 bg-zinc-50 rounded-xl border border-zinc-100 mb-6">
+                <div className="text-sm font-semibold text-zinc-500 mb-2 uppercase tracking-wider">
+                  Stagione 26/27 - Serie A & Champions
                 </div>
-                <div className="flex items-center justify-center space-x-6 mb-6">
-                  <div className="text-2xl font-bold">AS ROMA</div>
-                  <div className="text-zinc-400 font-bold text-xl">VS</div>
-                  <div className="text-2xl font-bold">AVVERSARIO</div>
+                <div className="text-lg font-medium text-zinc-700 text-center">
+                  I calendari ufficiali non sono ancora stati sorteggiati.<br/>
+                  <span className="text-sm text-zinc-500 mt-2 block">Torna a trovarci a Luglio per tutte le date!</span>
                 </div>
-                <div className="text-lg font-medium text-zinc-700">
-                  Data e Ora da definire
-                </div>
-                <div className="mt-6 text-sm text-center text-zinc-500">
-                  Vieni a vederla con noi in sede! Ingresso riservato ai tesserati.
-                </div>
+              </div>
+              <div className="p-4 bg-secondary/20 rounded-xl border border-secondary/30 text-center">
+                <p className="font-bold text-primary">📍 Sede Visiva: Circolo Oasi di Chiani</p>
+                <p className="text-sm text-zinc-700 mt-1">Vieni a vedere le partite sul nostro maxischermo!</p>
               </div>
             </div>
 
@@ -77,9 +85,9 @@ export default function Home() {
 
                 <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-zinc-100">
                   <div className="text-sm text-zinc-500 font-bold mb-2">Organizzazione</div>
-                  <h3 className="text-xl font-bold text-zinc-800 mb-2">Trasferta a Roma</h3>
+                  <h3 className="text-xl font-bold text-zinc-800 mb-2">Notti di Champions & Trasferte</h3>
                   <p className="text-zinc-600 mb-4">
-                    Stiamo organizzando i pullman per le prossime partite all'Olimpico. Maggiori dettagli verranno comunicati ai soci tramite l'area riservata e WhatsApp.
+                    Ci stiamo già organizzando per la prossima emozionante stagione. I pullman per l'Olimpico si riempiono in un attimo, preparati a tesserarti!
                   </p>
                   <Link href="/login" className="text-primary font-semibold hover:underline">
                     Accedi all'area soci &rarr;

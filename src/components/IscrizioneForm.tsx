@@ -222,17 +222,15 @@ export function IscrizioneForm() {
                 <p className="mb-2">2. Tipologia di dati raccolti: Nome, email, telefono, data di nascita, presenze. I dati non vengono ceduti a terzi.</p>
                 <p className="mb-2">3. Sicurezza: I dati sono custoditi in ambienti protetti. Non vengono pubblicati o condivisi.</p>
                 <p>4. Validità: Il presente documento è valido per l'intera stagione sportiva in corso.</p>
-              </div>
-
-              <div>
-                <label className="flex items-start">
+                
+                <label className="flex items-start mt-4">
                   <input
                     type="checkbox"
                     {...register("accettazionePrivacy")}
                     className="mt-1 w-5 h-5 text-primary rounded border-zinc-300 focus:ring-primary"
                   />
                   <span className="ml-3 text-sm text-zinc-700">
-                    Dichiaro di aver letto e accettato l'informativa sui sistemi digitali e il trattamento dati del club *
+                    Dichiaro di aver letto e accettato la <a href="#" className="text-primary hover:underline">Privacy Policy</a> per il trattamento dei dati personali ai fini del tesseramento.*
                   </span>
                 </label>
                 {errors.accettazionePrivacy && <p className="text-red-500 text-sm mt-1">{errors.accettazionePrivacy.message}</p>}

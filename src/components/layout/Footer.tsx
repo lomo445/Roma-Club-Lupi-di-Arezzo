@@ -3,10 +3,10 @@ export function Footer() {
     <footer className="bg-zinc-900 text-zinc-300 py-8 border-t-4 border-secondary mt-auto">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <h3 className="text-xl font-bold text-white mb-4">Roma Club Arezzo</h3>
-          <p className="text-sm">
-            Club Ufficiale AS Roma "Romolo Brizzi" - Lupi di Arezzo. 
-            Sempre al fianco dei nostri colori.
+          <h3 className="text-xl font-bold mb-4 text-white">Roma Club "Lupi di Arezzo"</h3>
+          <p className="text-zinc-400">
+            Intitolato a <strong>Romolo Brizzi</strong>.<br/>
+            Sede ufficiale: <strong>Circolo Oasi di Chiani</strong>, Arezzo.
           </p>
         </div>
         <div>
@@ -26,7 +26,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container mx-auto px-4 mt-8 pt-4 border-t border-zinc-800 text-center text-xs text-zinc-500">
-        &copy; {new Date().getFullYear()} Roma Club Lupi di Arezzo. Tutti i diritti riservati.
+        <p>&copy; {new Date().getFullYear()} Roma Club Lupi di Arezzo "Romolo Brizzi". Tutti i diritti riservati.</p>
       </div>
     </footer>
   );
