@@ -16,26 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
-        // FALLBACK SICURO PER CREDENZIALI DI TEST (Bypassa errori del DB su Vercel)
-        if (credentials.email === "admin@lupidarezzo.it" && credentials.password === "admin") {
-          return {
-            id: "test-admin-id",
-            email: "admin@lupidarezzo.it",
-            name: "Amministratore Test",
-            role: "ADMIN",
-            memberNumber: "A001"
-          };
-        }
-        if (credentials.email === "socio@lupidarezzo.it" && credentials.password === "socio") {
-          return {
-            id: "test-socio-id",
-            email: "socio@lupidarezzo.it",
-            name: "Socio Test",
-            role: "USER",
-            memberNumber: "S001"
-          };
-        }
-
         try {
           const user = await prisma.user.findUnique({ where: { email: credentials.email as string } });
           

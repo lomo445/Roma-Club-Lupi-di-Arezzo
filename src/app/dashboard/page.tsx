@@ -138,15 +138,20 @@ export default async function DashboardPage() {
             </div>
             <div className="md:col-span-8 space-y-6">
               
-              <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100">
-                <h3 className="text-xl font-bold text-zinc-800 mb-4">Stato Abbonamento</h3>
-                <div className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-                  <div>
-                    <div className="font-bold text-green-800">Tessera Attiva</div>
-                    <div className="text-sm text-green-600">Valida per l'intera stagione 25/26</div>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-zinc-800 mb-4">Stato Abbonamento</h3>
+                  <div className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                    <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                    <div>
+                      <div className="font-bold text-green-800">Tessera Attiva</div>
+                      <div className="text-sm text-green-600">Valida per l'intera stagione 26/27</div>
+                    </div>
                   </div>
                 </div>
+                <Link href="/dashboard/profilo" className="text-center w-full block py-2 px-4 border border-zinc-300 rounded-lg text-sm font-bold text-zinc-700 hover:bg-zinc-50 transition-colors">
+                  Modifica Dati Profilo
+                </Link>
               </div>
 
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100">

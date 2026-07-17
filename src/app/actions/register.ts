@@ -14,6 +14,20 @@ export async function registerUserAction(data: any) {
       birthDate = new Date(data.dataNascita);
     }
 
+    let role = "USER";
+    if (data.isDirettivo && data.chiaveSegreta === "LUPI26") {
+      role = "ADMIN";
+    }
+
+    const maxMember = await prisma.user.aggregate({
+      _max: { memberNumber: true }
+    });
+    
+    let nextMemberNumber = 2;
+    if (maxMember._max.memberNumber && maxMember._max.memberNumber >= 1) {
+      nextMemberNumber = maxMember._max.memberNumber + 1;
+    }
+
     const user = await prisma.user.create({
       data: {
         email: data.email,
@@ -24,7 +38,8 @@ export async function registerUserAction(data: any) {
         birthPlace: data.luogoNascita,
         birthDate: birthDate,
         gender: data.sesso,
-        role: "USER"
+        role: role as "USER" | "ADMIN",
+        memberNumber: nextMemberNumber
       }
     });
 

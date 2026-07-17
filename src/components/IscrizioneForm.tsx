@@ -18,9 +18,9 @@ const formSchema = z.object({
   telefono: z.string().min(5, "Inserire Numero di Telefono"),
   tipoTessera: z.enum(["Adulto", "Ridotto", "Familiare"]),
   metodoPagamento: z.enum(["Contanti", "Stripe"]),
-  accettazionePrivacy: z.boolean().refine((val) => val === true, {
-    message: "Devi accettare l'informativa",
-  }),
+  accettazionePrivacy: z.boolean().refine((val) => val === true, "Devi accettare la Privacy Policy per iscriverti"),
+  isDirettivo: z.boolean().optional(),
+  chiaveSegreta: z.string().optional()
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -32,6 +32,7 @@ export function IscrizioneForm() {
     handleSubmit,
     trigger,
     formState: { errors, isSubmitting },
+    watch
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -222,6 +223,28 @@ export function IscrizioneForm() {
                     <span className="ml-3 font-medium">Contanti (In sede)</span>
                   </label>
                 </div>
+              </div>
+
+              <div className="mt-8 border-t pt-6">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    {...register("isDirettivo")}
+                    className="w-5 h-5 text-primary rounded border-zinc-300 focus:ring-primary"
+                  />
+                  <span className="ml-3 font-bold text-zinc-800">Sono un membro del Direttivo</span>
+                </label>
+                {watch("isDirettivo") && (
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-zinc-700 mb-1">Chiave Segreta *</label>
+                    <input
+                      type="password"
+                      {...register("chiaveSegreta")}
+                      className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow"
+                      placeholder="Inserisci la chiave d'accesso"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="pt-6 flex justify-between">

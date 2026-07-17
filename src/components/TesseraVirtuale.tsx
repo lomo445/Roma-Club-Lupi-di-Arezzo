@@ -42,7 +42,7 @@ export function TesseraVirtuale({ memberNumber, name }: TesseraVirtualeProps) {
             <div className="text-xs opacity-80">Numero Tessera</div>
             <div className="font-mono text-lg">{String(memberNumber).padStart(4, '0')}</div>
           </div>
-          <div className="text-secondary font-bold">Stagione 25/26</div>
+          <div className="text-secondary font-bold">Stagione 26/27</div>
         </div>
       </div>
     </div>
