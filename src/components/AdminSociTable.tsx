@@ -17,16 +17,10 @@ type Socio = {
   status: "ACTIVE" | "PENDING" | "EXPIRED";
 };
 
-const defaultData: Socio[] = [
-  { id: "1", memberNumber: 1234, name: "Mario Rossi", email: "mario@example.com", status: "ACTIVE" },
-  { id: "2", memberNumber: 1235, name: "Luigi Verdi", email: "luigi@example.com", status: "PENDING" },
-  { id: "3", memberNumber: 1236, name: "Giulia Neri", email: "giulia@example.com", status: "EXPIRED" },
-];
-
 const columnHelper = createColumnHelper<Socio>();
 
-export function AdminSociTable() {
-  const [data, setData] = useState(() => [...defaultData]);
+export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
+  const [data, setData] = useState(() => [...initialData]);
   const [globalFilter, setGlobalFilter] = useState("");
 
   const handleApprove = (id: string) => {

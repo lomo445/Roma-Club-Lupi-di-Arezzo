@@ -17,7 +17,7 @@ export default async function DashboardPage() {
 
   let stats = null;
   if (isAdmin) {
-    const totalUsers = await prisma.user.count({ where: { role: "USER" } });
+    const totalUsers = await prisma.user.count();
     const maleUsers = await prisma.user.count({ where: { gender: "Maschio" } });
     const femaleUsers = await prisma.user.count({ where: { gender: "Femmina" } });
     
@@ -66,8 +66,8 @@ export default async function DashboardPage() {
 
       <div className="container mx-auto max-w-6xl px-4 -mt-16 relative z-10 pb-12">
 
-        {isAdmin ? (
-          <div className="space-y-8">
+        {isAdmin && (
+          <div className="space-y-8 mb-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Link href="/dashboard/admin/soci" className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100 hover:shadow-md transition-shadow group">
                 <div className="text-primary text-4xl mb-4 group-hover:scale-110 transition-transform origin-left">👥</div>
@@ -128,8 +128,9 @@ export default async function DashboardPage() {
               </div>
             )}
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        )}
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             <div className="md:col-span-4 flex justify-center md:justify-start">
               <TesseraVirtuale 
                 name={user.name || "Socio"} 
@@ -164,7 +165,6 @@ export default async function DashboardPage() {
 
             </div>
           </div>
-        )}
       </div>
     </div>
   );
