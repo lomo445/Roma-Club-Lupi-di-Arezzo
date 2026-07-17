@@ -123,7 +123,7 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border-t-4 border-primary p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-zinc-800">Elenco Soci</h2>
         <input
           value={globalFilter ?? ""}
@@ -139,7 +139,7 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="px-6 py-3 font-semibold">
+                  <th key={header.id} className="px-4 py-3 font-semibold whitespace-nowrap">
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
@@ -153,7 +153,7 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="bg-white border-b border-zinc-100 hover:bg-zinc-50 transition-colors">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-6 py-4">
+                  <td key={cell.id} className="px-4 py-4 whitespace-nowrap">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
