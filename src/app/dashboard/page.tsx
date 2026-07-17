@@ -15,19 +15,24 @@ export default async function DashboardPage() {
   const isAdmin = user.role === "ADMIN";
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-12 px-4">
-      <div className="container mx-auto max-w-5xl">
-        <div className="flex justify-between items-end mb-8 border-b border-zinc-200 pb-4">
-          <div>
-            <h1 className="text-3xl font-bold text-zinc-800">
-              Ciao, {user.name}
-            </h1>
-            <p className="text-zinc-500">
-              {isAdmin ? "Pannello di Controllo Direttivo" : "La tua Area Riservata Socio"}
-            </p>
+    <div className="min-h-screen bg-zinc-50">
+      <div className="bg-primary pb-24 pt-12 px-4 shadow-inner">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 border-b border-white/20 pb-6">
+            <div>
+              <h1 className="text-4xl font-black text-white drop-shadow-md">
+                Ciao, {user.name}
+              </h1>
+              <p className="text-zinc-200 mt-2 font-medium">
+                {isAdmin ? "Pannello di Controllo Direttivo" : "La tua Area Riservata Socio"}
+              </p>
+            </div>
+            <LogoutButton />
           </div>
-          <LogoutButton />
         </div>
+      </div>
+
+      <div className="container mx-auto max-w-6xl px-4 -mt-16 relative z-10 pb-12">
 
         {isAdmin ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

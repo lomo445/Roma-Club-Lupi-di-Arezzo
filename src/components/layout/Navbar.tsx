@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { auth } from "@/auth";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await auth();
   return (
     <nav className="bg-primary text-primary-foreground sticky top-0 z-50 w-full border-b border-border/40 shadow-xl">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
@@ -30,12 +32,21 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Link 
-            href="/login" 
-            className="text-sm font-bold border-2 border-white/80 px-4 py-2 rounded-md hover:bg-white hover:text-primary transition-all"
-          >
-            Area Riservata
-          </Link>
+          {session ? (
+            <Link 
+              href="/dashboard" 
+              className="text-sm font-bold bg-white text-primary px-4 py-2 rounded-md hover:bg-zinc-200 transition-all shadow-md"
+            >
+              Il tuo Profilo
+            </Link>
+          ) : (
+            <Link 
+              href="/login" 
+              className="text-sm font-bold border-2 border-white/80 px-4 py-2 rounded-md hover:bg-white hover:text-primary transition-all shadow-sm"
+            >
+              Area Riservata
+            </Link>
+          )}
         </div>
       </div>
     </nav>
