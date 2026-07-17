@@ -25,27 +25,25 @@ export default function ChiSiamo() {
             <h2 className="text-3xl font-bold text-zinc-800 mb-6">La nostra storia</h2>
             <p className="text-zinc-600 mb-4 leading-relaxed">
               Il Roma Club "Lupi di Arezzo" nasce dalla passione travolgente per i colori giallorossi di un gruppo di amici aretini. 
-              Intitolato allo storico fondatore "Romolo Brizzi", il club rappresenta un punto di riferimento per tutti i tifosi della AS Roma 
+              Intitolato a "Romolo Brizzi", il club rappresenta un punto di riferimento per tutti i tifosi della AS Roma 
               residenti nella provincia di Arezzo e dintorni.
             </p>
             <p className="text-zinc-600 mb-4 leading-relaxed">
-              Il nostro obiettivo principale è aggregare i tifosi per sostenere la squadra, organizzare trasferte, 
-              eventi di beneficenza e guardare le partite insieme in sede, trasmettendo la nostra immensa fede giallorossa 
+              Il nostro obiettivo principale è aggregare i tifosi per sostenere la squadra, organizzare trasferte 
+              e guardare le partite insieme in sede, trasmettendo la nostra immensa fede giallorossa 
               anche a chilometri di distanza dalla Capitale.
             </p>
             
             <h2 className="text-3xl font-bold text-zinc-800 mt-12 mb-6">La Sede</h2>
             <p className="text-zinc-600 mb-4 leading-relaxed">
-              La nostra sede, il "covo" dei Lupi, è dotata di maxischermi, area bar, sciarpe storiche e tutto ciò che serve 
+              La nostra sede, il "covo" dei Lupi, è dotata di schermo, area bar, sciarpe storiche e tutto ciò che serve 
               per vivere i 90 minuti di passione nel migliore dei modi. È il luogo dove ci ritroviamo non solo per le partite, 
               ma anche per cene sociali, riunioni del direttivo ed eventi speciali.
             </p>
             <div className="bg-zinc-50 p-6 rounded-lg border border-zinc-200 my-8">
               <h3 className="font-bold text-lg mb-2">Indirizzo Sede</h3>
-              <p className="text-zinc-600">Arezzo (AR), Italia</p>
-              <p className="text-sm text-zinc-500 mt-2">
-                (L'indirizzo preciso viene comunicato ai tesserati per le riunioni e le partite)
-              </p>
+              <p className="text-zinc-600 font-medium">Circolo Oasi Chiani</p>
+              <p className="text-zinc-600">Ponte a Chiani 1, Arezzo (AR)</p>
             </div>
           </div>
         </div>

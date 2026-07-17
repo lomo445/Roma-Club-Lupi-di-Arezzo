@@ -8,7 +8,7 @@ export async function Navbar() {
     <nav className="bg-primary text-primary-foreground sticky top-0 z-50 w-full border-b border-border/40 shadow-xl">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-3 transition-transform hover:scale-105">
-          <div className="relative w-40 h-12">
+          <div className="relative w-56 h-16">
             {/* Il logo verrà caricato qui. Ho impostato le proporzioni per il logo orizzontale che mi hai inviato */}
             <Image 
               src="/logo.png" 

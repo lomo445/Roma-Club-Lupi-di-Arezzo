@@ -6,8 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { registerUserAction } from "@/app/actions/register";
+
 const formSchema = z.object({
-  email: z.string().email("Email non valida"),
+  email: z.string().email("Inserire un'email valida"),
+  password: z.string().min(6, "La password deve avere almeno 6 caratteri"),
   nomeCognome: z.string().min(3, "Inserire Nome e Cognome"),
   dataNascita: z.string().min(8, "Inserire Data di Nascita"),
   luogoNascita: z.string().min(2, "Inserire Luogo di Nascita"),
@@ -51,10 +54,18 @@ export function IscrizioneForm() {
 
   const prevStep = () => setStep((s) => s - 1);
 
-  const onSubmit = async (data: FormData) => {
-    // Qui andrà la logica API per salvare il socio e fare redirect a Stripe
-    console.log("Dati inviati:", data);
-    alert("Iscrizione simulata con successo!");
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const res = await registerUserAction(data);
+      if (res.success) {
+        alert("Iscrizione completata con successo! Ora puoi effettuare il login.");
+        window.location.href = "/login";
+      } else {
+        alert(res.error || "Errore durante l'iscrizione.");
+      }
+    } catch (e) {
+      alert("Errore di connessione.");
+    }
   };
 
   return (
@@ -88,6 +99,17 @@ export function IscrizioneForm() {
                   placeholder="mario.rossi@example.com"
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-1">Crea una Password *</label>
+                <input
+                  type="password"
+                  {...register("password")}
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-shadow"
+                  placeholder="La tua password per accedere all'area riservata"
+                />
+                {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
               </div>
 
               <div>
@@ -175,15 +197,15 @@ export function IscrizioneForm() {
                 <div className="space-y-3">
                   <label className="flex items-center p-3 border border-zinc-200 rounded-lg cursor-pointer hover:bg-zinc-50 transition-colors">
                     <input type="radio" value="Adulto" {...register("tipoTessera")} className="w-5 h-5 text-primary" />
-                    <span className="ml-3 font-medium">Adulto - 60 €</span>
+                    <span className="ml-3 font-medium">Adulto - 65 €</span>
                   </label>
                   <label className="flex items-center p-3 border border-zinc-200 rounded-lg cursor-pointer hover:bg-zinc-50 transition-colors">
                     <input type="radio" value="Ridotto" {...register("tipoTessera")} className="w-5 h-5 text-primary" />
-                    <span className="ml-3 font-medium">Ridotto Minore - 25 €</span>
+                    <span className="ml-3 font-medium">Ridotto Minore - 35 €</span>
                   </label>
                   <label className="flex items-center p-3 border border-zinc-200 rounded-lg cursor-pointer hover:bg-zinc-50 transition-colors">
                     <input type="radio" value="Familiare" {...register("tipoTessera")} className="w-5 h-5 text-primary" />
-                    <span className="ml-3 font-medium">Familiare aggiunto - 25 €</span>
+                    <span className="ml-3 font-medium">Familiare aggiunto - 35 €</span>
                   </label>
                 </div>
               </div>
