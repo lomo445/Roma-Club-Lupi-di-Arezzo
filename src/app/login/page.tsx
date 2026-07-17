@@ -4,6 +4,8 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,21 +35,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-zinc-900">
-          Accedi all'Area Riservata
+    <div className="min-h-screen relative flex flex-col justify-center py-12 sm:px-6 lg:px-8 overflow-hidden">
+      <Image 
+        src="/stadio-olimpico.jpg" 
+        alt="Stadio Olimpico Pieno" 
+        fill 
+        priority 
+        className="object-cover z-0 opacity-40" 
+      />
+      <div className="absolute inset-0 bg-primary/20 z-0"></div>
+      
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="sm:mx-auto sm:w-full sm:max-w-md relative z-10"
+      >
+        <h2 className="mt-6 text-center text-4xl font-extrabold text-white drop-shadow-lg">
+          Area Riservata
         </h2>
-        <p className="mt-2 text-center text-sm text-zinc-600">
+        <p className="mt-2 text-center text-sm text-zinc-200 drop-shadow-md">
           Oppure{" "}
-          <Link href="/iscriviti" className="font-medium text-primary hover:text-primary/80">
+          <Link href="/iscriviti" className="font-bold text-secondary hover:text-yellow-400">
             richiedi il tesseramento
           </Link>
         </p>
-      </div>
+      </motion.div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border-t-4 border-primary">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2 }}
+        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10"
+      >
+        <div className="bg-white/95 backdrop-blur-md py-8 px-4 shadow-2xl sm:rounded-2xl sm:px-10 border-t-8 border-primary">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-medium text-zinc-700">Email</label>
@@ -107,7 +127,7 @@ export default function LoginPage() {
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
