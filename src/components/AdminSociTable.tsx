@@ -8,6 +8,7 @@ import {
   useReactTable,
   getFilteredRowModel,
 } from "@tanstack/react-table";
+import { updateMemberNumberAction } from "@/app/actions/updateMemberNumber";
 
 type Socio = {
   id: string;
@@ -32,6 +33,24 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
         return row;
       })
     );
+  };
+
+  const handleEditMemberNumber = async (id: string, currentNumber: number) => {
+    const newVal = prompt("Inserisci il nuovo numero di tessera:", String(currentNumber));
+    if (!newVal) return;
+    const num = parseInt(newVal, 10);
+    if (isNaN(num) || num <= 0) {
+      alert("Inserire un numero valido.");
+      return;
+    }
+    
+    const res = await updateMemberNumberAction(id, num);
+    if (res.success) {
+      setData((old) => old.map(r => r.id === id ? { ...r, memberNumber: num } : r));
+      alert("Numero di tessera aggiornato!");
+    } else {
+      alert(res.error);
+    }
   };
 
   const columns = [
@@ -66,14 +85,27 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
       header: "Azioni",
       cell: (props) => {
         const isPending = props.row.original.status === "PENDING";
-        return isPending ? (
-          <button
-            onClick={() => handleApprove(props.row.original.id)}
-            className="bg-primary text-white px-3 py-1 rounded text-xs font-bold hover:bg-primary/90 transition-colors"
-          >
-            Approva Pagamento
-          </button>
-        ) : null;
+        const id = props.row.original.id;
+        const currentNumber = props.row.original.memberNumber;
+
+        return (
+          <div className="flex space-x-2">
+            {isPending && (
+              <button
+                onClick={() => handleApprove(id)}
+                className="bg-primary text-white px-3 py-1 rounded text-xs font-bold hover:bg-primary/90 transition-colors"
+              >
+                Approva
+              </button>
+            )}
+            <button
+              onClick={() => handleEditMemberNumber(id, currentNumber)}
+              className="bg-zinc-200 text-zinc-700 px-3 py-1 rounded text-xs font-bold hover:bg-zinc-300 transition-colors"
+            >
+              Modifica N°
+            </button>
+          </div>
+        );
       },
     }),
   ];
