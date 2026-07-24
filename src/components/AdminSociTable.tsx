@@ -9,6 +9,8 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { updateMemberNumberAction } from "@/app/actions/updateMemberNumber";
+import { deleteUserAction } from "@/app/actions/deleteUser";
+import Link from "next/link";
 
 type Socio = {
   id: string;
@@ -53,6 +55,18 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("ATTENZIONE: Sei sicuro di voler eliminare definitivamente questo socio e tutti i suoi dati (presenze, abbonamenti)? Questa operazione non è reversibile.")) return;
+    
+    const res = await deleteUserAction(id);
+    if (res.success) {
+      setData((old) => old.filter((r) => r.id !== id));
+      alert("Socio eliminato con successo.");
+    } else {
+      alert(res.error || "Errore durante l'eliminazione.");
+    }
+  };
+
   const columns = [
     columnHelper.accessor("memberNumber", {
       header: "N° Tessera",
@@ -89,7 +103,21 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
         const currentNumber = props.row.original.memberNumber;
 
         return (
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
+            <Link 
+              href={`/dashboard/admin/soci/${id}`}
+              className="bg-zinc-200 text-zinc-700 px-3 py-1 rounded text-xs font-bold hover:bg-zinc-300 transition-colors"
+            >
+              Visualizza
+            </Link>
+            
+            <button
+              onClick={() => handleEditMemberNumber(id, currentNumber)}
+              className="bg-zinc-200 text-zinc-700 px-3 py-1 rounded text-xs font-bold hover:bg-zinc-300 transition-colors"
+            >
+              N° Tessera
+            </button>
+            
             {isPending && (
               <button
                 onClick={() => handleApprove(id)}
@@ -98,11 +126,12 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
                 Approva
               </button>
             )}
+
             <button
-              onClick={() => handleEditMemberNumber(id, currentNumber)}
-              className="bg-zinc-200 text-zinc-700 px-3 py-1 rounded text-xs font-bold hover:bg-zinc-300 transition-colors"
+              onClick={() => handleDelete(id)}
+              className="bg-red-100 text-red-700 px-3 py-1 rounded text-xs font-bold hover:bg-red-200 transition-colors"
             >
-              Modifica N°
+              Elimina
             </button>
           </div>
         );
