@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -36,6 +37,20 @@ export async function POST(req: Request) {
           stripeSessionId: session.id 
         }
       });
+
+      // Invia l'email di benvenuto a tutti gli utenti associati agli abbonamenti pagati
+      const subs = await prisma.subscription.findMany({
+        where: { id: { in: subscriptionIds } },
+        include: { user: true }
+      });
+
+      for (const sub of subs) {
+        await sendBrevoEmail({
+          to: [{ email: sub.user.email, name: `${sub.user.name} ${sub.user.surname}` }],
+          subject: "Roma Club Arezzo - Pagamento Confermato! 🐺",
+          htmlContent: EMAIL_TEMPLATES.welcome(sub.user.name, false)
+        }).catch(err => console.error("Errore email benvenuto Stripe:", err));
+      }
       
       console.log(`[Stripe Webhook] Attivati ${subscriptionIds.length} abbonamenti.`);
     }

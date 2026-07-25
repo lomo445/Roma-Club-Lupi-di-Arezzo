@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { updateMemberNumberAction } from "@/app/actions/updateMemberNumber";
 import { deleteUserAction } from "@/app/actions/deleteUser";
+import { sendReminderAction } from "@/app/actions/sendReminder";
 import Link from "next/link";
 
 type Socio = {
@@ -67,6 +68,16 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
     }
   };
 
+  const handleRemind = async (id: string) => {
+    alert("Invio sollecito in corso...");
+    const res = await sendReminderAction(id);
+    if (res.success) {
+      alert("Email di sollecito inviata con successo!");
+    } else {
+      alert(res.error || "Errore durante l'invio dell'email.");
+    }
+  };
+
   const columns = [
     columnHelper.accessor("memberNumber", {
       header: "N° Tessera",
@@ -118,13 +129,22 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
               N° Tessera
             </button>
             
+            
             {isPending && (
-              <button
-                onClick={() => handleApprove(id)}
-                className="bg-primary text-white px-3 py-1 rounded text-xs font-bold hover:bg-primary/90 transition-colors"
-              >
-                Approva
-              </button>
+              <>
+                <button
+                  onClick={() => handleRemind(id)}
+                  className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded text-xs font-bold hover:bg-yellow-200 transition-colors"
+                >
+                  Sollecita
+                </button>
+                <button
+                  onClick={() => handleApprove(id)}
+                  className="bg-primary text-white px-3 py-1 rounded text-xs font-bold hover:bg-primary/90 transition-colors"
+                >
+                  Approva
+                </button>
+              </>
             )}
 
             <button

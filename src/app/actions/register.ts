@@ -2,10 +2,12 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { stripe } from "@/lib/stripe";
+import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
 
 export async function registerUserAction(data: any) {
   try {
     const createdSubscriptionIds: string[] = [];
+    const createdUsers: any[] = [];
     const priceMap = {
       "Adulto": 65,
       "Ridotto": 35,
@@ -68,6 +70,8 @@ export async function registerUserAction(data: any) {
         }
       });
 
+      createdUsers.push(user);
+
       const price = priceMap[member.tipoTessera as keyof typeof priceMap] || 65;
       totalPrice += price;
 
@@ -111,6 +115,15 @@ export async function registerUserAction(data: any) {
       });
 
       return { success: true, checkoutUrl: session.url };
+    } else {
+      // Per i pagamenti in Contanti, invio subito email di benvenuto con avviso
+      for (const u of createdUsers) {
+        await sendBrevoEmail({
+          to: [{ email: u.email, name: `${u.name} ${u.surname}` }],
+          subject: "Roma Club Arezzo - Benvenuto!",
+          htmlContent: EMAIL_TEMPLATES.welcome(u.name, true)
+        }).catch(err => console.error("Errore invio email benvenuto contanti:", err));
+      }
     }
 
     // Se è contanti, finisce qui.

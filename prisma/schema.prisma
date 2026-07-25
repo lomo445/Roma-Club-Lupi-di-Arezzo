@@ -48,6 +48,7 @@ model Subscription {
   method          String             // "Stripe" or "Contanti"
   status          SubscriptionStatus @default(PENDING)
   stripeSessionId String?
+  reminderSent    Boolean            @default(false)
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 
