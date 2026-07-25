@@ -3,15 +3,19 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { stripe } from "@/lib/stripe";
 import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
+import { getSettingsAction } from "@/app/actions/settings";
 
 export async function registerUserAction(data: any) {
   try {
     const createdSubscriptionIds: string[] = [];
     const createdUsers: any[] = [];
+    
+    // Leggi impostazioni globali (Stagione e Prezzi)
+    const settings = await getSettingsAction();
     const priceMap = {
-      "Adulto": 65,
-      "Ridotto": 35,
-      "Familiare": 35
+      "Adulto": settings.priceAdult,
+      "Ridotto": settings.priceReduced,
+      "Familiare": settings.priceFamily
     };
     let totalPrice = 0;
     const lineItems: any[] = [];
@@ -78,7 +82,7 @@ export async function registerUserAction(data: any) {
       const sub = await prisma.subscription.create({
         data: {
           userId: user.id,
-          season: "2026/2027",
+          season: settings.season,
           type: member.tipoTessera,
           price: price,
           method: data.metodoPagamento,

@@ -1,12 +1,15 @@
-import { IscrizioneForm } from '@/components/IscrizioneForm';
+import IscrizioneForm from '@/components/IscrizioneForm';
 import Image from 'next/image';
+import { getSettingsAction } from "@/app/actions/settings";
 
 export const metadata = {
   title: 'Tesseramento | Roma Club Lupi di Arezzo',
   description: 'Unisciti al Roma Club Lupi di Arezzo. Compila il modulo per la stagione in corso.',
 };
 
-export default function IscrivitiPage() {
+export default async function IscrivitiPage() {
+  const settings = await getSettingsAction();
+
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col">
       <div className="relative h-64 w-full">
@@ -27,7 +30,11 @@ export default function IscrivitiPage() {
 
       <div className="flex-grow container mx-auto px-4 py-12 -mt-16 relative z-10">
         <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10 border-t-8 border-secondary max-w-3xl mx-auto">
-          <IscrizioneForm />
+          <IscrizioneForm 
+            priceAdult={settings.priceAdult}
+            priceReduced={settings.priceReduced}
+            priceFamily={settings.priceFamily}
+          />
         </div>
       </div>
     </div>

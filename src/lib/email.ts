@@ -71,6 +71,21 @@ export const EMAIL_TEMPLATES = {
         <p>Abbiamo notato che hai iniziato la registrazione al Roma Club Arezzo ma l'abbonamento risulta ancora <strong>In Attesa</strong> (importo: ${amount} €).</p>
         <p>Per attivare definitivamente la tua tessera e ricevere il tuo QR code personale, per favore completa il pagamento.</p>
         <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://romaclubarezzo.vercel.app'}/login" style="display: inline-block; background-color: #E3B044; color: #8C1C13; font-weight: bold; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-top: 10px;">Vai al tuo profilo</a>
+        <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://romaclubarezzo.vercel.app'}/login" style="display: inline-block; background-color: #E3B044; color: #8C1C13; font-weight: bold; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-top: 10px;">Vai al tuo profilo</a>
+      </div>
+    </div>
+  `,
+  forgotPassword: (name: string, resetLink: string) => `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <div style="background-color: #8C1C13; padding: 20px; text-align: center;">
+        <h1 style="color: white; margin: 0;">Recupero Password</h1>
+      </div>
+      <div style="padding: 20px; background-color: #f9f9f9;">
+        <p>Ciao <strong>${name}</strong>,</p>
+        <p>Abbiamo ricevuto una richiesta per reimpostare la tua password.</p>
+        <p>Clicca sul pulsante qui sotto per crearne una nuova. Il link è valido per 1 ora.</p>
+        <a href="${resetLink}" style="display: inline-block; background-color: #E3B044; color: #8C1C13; font-weight: bold; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-top: 10px;">Reimposta Password</a>
+        <p style="margin-top: 20px; font-size: 12px; color: #666;">Se non hai richiesto tu il reset, ignora semplicemente questa email.</p>
       </div>
     </div>
   `

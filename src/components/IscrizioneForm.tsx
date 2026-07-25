@@ -7,7 +7,7 @@ import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { registerUserAction } from "@/app/actions/register";
-import { Trash2, UserPlus } from "lucide-react";
+import { Trash2, UserPlus, User } from "lucide-react";
 
 const memberSchema = z.object({
   email: z.string().email("Inserire un'email valida"),
@@ -30,15 +30,22 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function IscrizioneForm() {
-  const [step, setStep] = useState(1);
+interface SettingsProps {
+  priceAdult: number;
+  priceReduced: number;
+  priceFamily: number;
+}
+
+export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }: SettingsProps) {
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const {
     register,
     handleSubmit,
     trigger,
     control,
     formState: { errors, isSubmitting },
-    watch
+    watch,
+    setValue
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,29 +54,34 @@ export function IscrizioneForm() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: "members"
   });
 
   const members = watch("members");
 
+  const updateMember = (index: number, field: keyof typeof members[0], value: any) => {
+    const current = members[index];
+    update(index, { ...current, [field]: value });
+  };
+
   const getTotalPrice = () => {
     let total = 0;
     members.forEach(m => {
-      if (m.tipoTessera === "Adulto") total += 65;
-      if (m.tipoTessera === "Ridotto") total += 35;
-      if (m.tipoTessera === "Familiare") total += 35;
+      if (m.tipoTessera === "Adulto") total += priceAdult;
+      else if (m.tipoTessera === "Ridotto") total += priceReduced;
+      else if (m.tipoTessera === "Familiare") total += priceFamily;
     });
     return total;
   };
 
   const nextStep = async () => {
     const isValid = await trigger("members");
-    if (isValid) setStep((s) => s + 1);
+    if (isValid) setStep((s) => (s < 4 ? (s + 1) as 1 | 2 | 3 | 4 : s));
   };
 
-  const prevStep = () => setStep((s) => s - 1);
+  const prevStep = () => setStep((s) => (s > 1 ? (s - 1) as 1 | 2 | 3 | 4 : s));
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
@@ -113,8 +125,11 @@ export function IscrizioneForm() {
             >
               {fields.map((field, index) => (
                 <div key={field.id} className="p-6 border border-zinc-200 rounded-xl bg-zinc-50 relative">
-                  <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-primary">Iscritto #{index + 1}</h3>
+                  <div className="flex justify-between items-center bg-white p-3 rounded border mb-6">
+                    <span><User size={16} className="inline mr-2 text-primary"/>{members[index].nomeCognome || `Socio ${index+1}`}</span>
+                    <span className="font-bold">
+                      {members[index].tipoTessera === 'Adulto' ? priceAdult : members[index].tipoTessera === 'Ridotto' ? priceReduced : priceFamily}€
+                    </span>
                     {index > 0 && (
                       <button 
                         type="button" 
@@ -188,32 +203,31 @@ export function IscrizioneForm() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 pt-6 border-t border-zinc-200">
-                    <div>
-                      <label className="block text-sm font-bold text-zinc-700 mb-2">Sesso *</label>
-                      <select
-                        {...register(`members.${index}.sesso`)}
-                        className="w-full px-4 py-3 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white"
-                      >
-                        <option value="">Seleziona...</option>
-                        <option value="Maschio">Maschio</option>
-                        <option value="Femmina">Femmina</option>
-                        <option value="Altro">Altro / Preferisco non specificare</option>
-                      </select>
-                      {errors.members?.[index]?.sesso && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.sesso?.message}</p>}
-                    </div>
+                  <div className="mt-6 pt-6 border-t border-zinc-200">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-1">
+                        <label className="block text-sm font-bold text-zinc-700 mb-2">Sesso *</label>
+                        <select
+                          {...register(`members.${index}.sesso`)}
+                          className="w-full px-4 py-3 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white"
+                        >
+                          <option value="">Seleziona...</option>
+                          <option value="Maschio">Maschio</option>
+                          <option value="Femmina">Femmina</option>
+                          <option value="Altro">Altro / Preferisco non specificare</option>
+                        </select>
+                        {errors.members?.[index]?.sesso && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.sesso?.message}</p>}
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-bold text-zinc-700 mb-2">Scegli il tipo di Tessera *</label>
-                      <select
-                        {...register(`members.${index}.tipoTessera`)}
-                        className="w-full px-4 py-3 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-bold"
-                      >
-                        <option value="Adulto">Adulto - 65 €</option>
-                        <option value="Ridotto">Ridotto Minore - 35 €</option>
-                        <option value="Familiare">Familiare Aggiunto - 35 €</option>
-                      </select>
-                      {errors.members?.[index]?.tipoTessera && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.tipoTessera?.message}</p>}
+                      <div className="flex-[2]">
+                        <label className="block text-sm font-bold text-zinc-700 mb-2">Scegli il tipo di Tessera *</label>
+                        <div className="grid grid-cols-3 gap-2">
+                          <button type="button" onClick={() => updateMember(index, "tipoTessera", "Adulto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Adulto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Adulto ({priceAdult}€)</button>
+                          <button type="button" onClick={() => updateMember(index, "tipoTessera", "Ridotto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Ridotto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Ridotto ({priceReduced}€)</button>
+                          <button type="button" onClick={() => updateMember(index, "tipoTessera", "Familiare")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Familiare' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Familiare ({priceFamily}€)</button>
+                        </div>
+                        {errors.members?.[index]?.tipoTessera && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.tipoTessera?.message}</p>}
+                      </div>
                     </div>
                   </div>
                 </div>

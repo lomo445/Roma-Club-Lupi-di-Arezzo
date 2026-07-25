@@ -30,10 +30,12 @@ model User {
   phone         String?
   birthDate     DateTime?
   birthPlace    String?
-  gender        String?
-  role          Role           @default(USER)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  gender            String?
+  role              Role           @default(USER)
+  resetToken        String?        @unique
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
   subscriptions Subscription[]
   attendances   Attendance[]
@@ -76,4 +78,13 @@ model Attendance {
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@unique([userId, eventId])
+}
+
+model ClubSettings {
+  id           String   @id @default("singleton")
+  season       String   @default("2026/2027")
+  priceAdult   Float    @default(65.0)
+  priceReduced Float    @default(35.0)
+  priceFamily  Float    @default(35.0)
+  updatedAt    DateTime @updatedAt
 }
