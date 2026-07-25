@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
+import { headers } from "next/headers";
 
 export async function sendReminderAction(userId: string) {
   try {
@@ -22,11 +23,16 @@ export async function sendReminderAction(userId: string) {
     if (!sub || sub.status !== "PENDING") {
       return { success: false, error: "Il socio non ha abbonamenti in sospeso." };
     }
+    
+    const headersList = await headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const loginLink = `${protocol}://${host}/login`;
 
     const res = await sendBrevoEmail({
       to: [{ email: user.email, name: `${user.name} ${user.surname}` }],
-      subject: "Roma Club Arezzo - Completa la tua iscrizione",
-      htmlContent: EMAIL_TEMPLATES.reminder(user.name, sub.price)
+      subject: "Roma Club Arezzo - Completa la tua iscrizione! 💛❤️",
+      htmlContent: EMAIL_TEMPLATES.reminder(user.name, sub.price, loginLink)
     });
 
     if (res.success) {

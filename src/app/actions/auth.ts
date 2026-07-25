@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
+import { headers } from "next/headers";
 
 export async function requestPasswordResetAction(email: string) {
   try {
@@ -21,12 +22,16 @@ export async function requestPasswordResetAction(email: string) {
       data: { resetToken: token, resetTokenExpiry: expiry }
     });
 
-    const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://romaclubarezzo.vercel.app'}/reset-password?token=${token}`;
+    const headersList = await headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const resetLink = `${protocol}://${host}/reset-password?token=${token}`;
+    const loginLink = `${protocol}://${host}/login`;
 
     await sendBrevoEmail({
       to: [{ email: user.email, name: `${user.name} ${user.surname}` }],
       subject: "Roma Club Arezzo - Recupero Password",
-      htmlContent: EMAIL_TEMPLATES.forgotPassword(user.name, resetLink)
+      htmlContent: EMAIL_TEMPLATES.forgotPassword(user.name, resetLink, loginLink)
     });
 
     return { success: true };

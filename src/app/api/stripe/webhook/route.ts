@@ -45,10 +45,15 @@ export async function POST(req: Request) {
       });
 
       for (const sub of subs) {
+        const headersList = await headers();
+        const host = headersList.get("host") || "localhost:3000";
+        const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+        const loginLink = `${protocol}://${host}/login`;
+
         await sendBrevoEmail({
           to: [{ email: sub.user.email, name: `${sub.user.name} ${sub.user.surname}` }],
           subject: "Roma Club Arezzo - Pagamento Confermato! 🐺",
-          htmlContent: EMAIL_TEMPLATES.welcome(sub.user.name, false)
+          htmlContent: EMAIL_TEMPLATES.welcome(sub.user.name, false, loginLink)
         }).catch(err => console.error("Errore email benvenuto Stripe:", err));
       }
       

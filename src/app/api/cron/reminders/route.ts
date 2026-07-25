@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
+import { headers } from "next/headers";
 
 export async function GET(req: Request) {
   // Verifica authorization header di Vercel Cron per sicurezza
@@ -27,11 +28,16 @@ export async function GET(req: Request) {
 
     let sentCount = 0;
 
+    const headersList = await headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const loginLink = `${protocol}://${host}/login`;
+
     for (const sub of pendingSubs) {
       const res = await sendBrevoEmail({
         to: [{ email: sub.user.email, name: `${sub.user.name} ${sub.user.surname}` }],
         subject: "Roma Club Arezzo - Completa la tua iscrizione",
-        htmlContent: EMAIL_TEMPLATES.reminder(sub.user.name, sub.price)
+        htmlContent: EMAIL_TEMPLATES.reminder(sub.user.name, sub.price, loginLink)
       });
 
       if (res.success) {

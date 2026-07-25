@@ -1,9 +1,10 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
 import { stripe } from "@/lib/stripe";
+import bcrypt from "bcryptjs";
 import { sendBrevoEmail, EMAIL_TEMPLATES } from "@/lib/email";
 import { getSettingsAction } from "@/app/actions/settings";
+import { headers } from "next/headers";
 
 export async function registerUserAction(data: any) {
   try {
@@ -105,14 +106,20 @@ export async function registerUserAction(data: any) {
       });
     }
 
+    // Costruisci il dominio dinamico per i link
+    const headersList = await headers();
+    const host = headersList.get("host") || "localhost:3000";
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const baseUrl = `${protocol}://${host}`;
+
     // Se il metodo è Stripe, creiamo la Checkout Session
     if (data.metodoPagamento === "Stripe") {
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
-        success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/login?checkout=success`,
-        cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/iscriviti`,
+        success_url: `${baseUrl}/login?checkout=success`,
+        cancel_url: `${baseUrl}/iscriviti`,
         metadata: {
           subscriptionIds: createdSubscriptionIds.join(','),
         },
@@ -125,7 +132,7 @@ export async function registerUserAction(data: any) {
         await sendBrevoEmail({
           to: [{ email: u.email, name: `${u.name} ${u.surname}` }],
           subject: "Roma Club Arezzo - Benvenuto!",
-          htmlContent: EMAIL_TEMPLATES.welcome(u.name, true)
+          htmlContent: EMAIL_TEMPLATES.welcome(u.name, true, `${baseUrl}/login`)
         }).catch(err => console.error("Errore invio email benvenuto contanti:", err));
       }
     }
