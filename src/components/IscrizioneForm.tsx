@@ -7,7 +7,8 @@ import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { registerUserAction } from "@/app/actions/register";
-import { Trash2, UserPlus, User } from "lucide-react";
+import { verifyAdultAction } from "@/app/actions/verifyAdult";
+import { Trash2, UserPlus, User, Loader2 } from "lucide-react";
 
 const memberSchema = z.object({
   email: z.string().email("Inserire un'email valida"),
@@ -18,6 +19,15 @@ const memberSchema = z.object({
   sesso: z.enum(["Maschio", "Femmina", "Altro"], { message: "Seleziona sesso" }),
   telefono: z.string().min(5, "Inserire Numero di Telefono"),
   tipoTessera: z.enum(["Adulto", "Ridotto", "Familiare"]),
+  parenteAdulto: z.string().optional(),
+}).refine((data) => {
+  if (data.tipoTessera === "Familiare" && (!data.parenteAdulto || data.parenteAdulto.length < 3)) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Devi indicare il Nome e Cognome dell'Adulto",
+  path: ["parenteAdulto"]
 });
 
 const formSchema = z.object({
@@ -38,6 +48,7 @@ interface SettingsProps {
 
 export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }: SettingsProps) {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [isValidating, setIsValidating] = useState(false);
   const {
     register,
     handleSubmit,
@@ -78,7 +89,32 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
 
   const nextStep = async () => {
     const isValid = await trigger("members");
-    if (isValid) setStep((s) => (s < 4 ? (s + 1) as 1 | 2 | 3 | 4 : s));
+    if (isValid) {
+      setIsValidating(true);
+      
+      // Controllo abusi tariffa Familiare
+      for (const m of members) {
+        if (m.tipoTessera === "Familiare" && m.parenteAdulto) {
+          // 1. Controllo se l'adulto è stato inserito nello stesso form
+          const isAdultInForm = members.some(
+            other => other.tipoTessera === "Adulto" && other.nomeCognome.toLowerCase().replace(/\s+/g, "") === m.parenteAdulto!.toLowerCase().replace(/\s+/g, "")
+          );
+          
+          if (!isAdultInForm) {
+            // 2. Controllo nel database
+            const res = await verifyAdultAction(m.parenteAdulto);
+            if (!res.exists) {
+              alert(`Attenzione: Non abbiamo trovato nessun tesserato Adulto chiamato "${m.parenteAdulto}" nel database, né in questo modulo di iscrizione.\n\nPer la tariffa Familiare è obbligatorio associarsi a un Adulto pagante. Controlla di aver scritto bene il nome o cambia la tipologia di tessera.`);
+              setIsValidating(false);
+              return;
+            }
+          }
+        }
+      }
+
+      setIsValidating(false);
+      setStep((s) => (s < 4 ? (s + 1) as 1 | 2 | 3 | 4 : s));
+    }
   };
 
   const prevStep = () => setStep((s) => (s > 1 ? (s - 1) as 1 | 2 | 3 | 4 : s));
@@ -229,6 +265,26 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                         {errors.members?.[index]?.tipoTessera && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.tipoTessera?.message}</p>}
                       </div>
                     </div>
+
+                    {members[index].tipoTessera === "Familiare" && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className="mt-6 p-5 bg-blue-50 border border-blue-200 rounded-xl"
+                      >
+                        <label className="block text-sm font-bold text-blue-900 mb-2">Nome e Cognome dell'Adulto associato *</label>
+                        <input
+                          type="text"
+                          {...register(`members.${index}.parenteAdulto`)}
+                          className="w-full px-4 py-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="Es. Mario Rossi"
+                        />
+                        {errors.members?.[index]?.parenteAdulto && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.parenteAdulto?.message}</p>}
+                        <p className="text-xs text-blue-700 mt-2">
+                          <strong>Prevenzione Abusi:</strong> Il sistema verificherà in tempo reale che l'adulto indicato sia già tesserato nel nostro database, oppure che tu lo stia iscrivendo insieme a te in questo stesso modulo.
+                        </p>
+                      </motion.div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -250,9 +306,11 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                 <button
                   type="button"
                   onClick={nextStep}
-                  className="bg-primary text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-primary/90 transition-colors"
+                  disabled={isValidating}
+                  className="bg-primary text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center gap-2"
                 >
-                  Avanti
+                  {isValidating && <Loader2 size={18} className="animate-spin" />}
+                  {isValidating ? "Verifica in corso..." : "Avanti"}
                 </button>
               </div>
             </motion.div>
