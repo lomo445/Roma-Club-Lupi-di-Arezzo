@@ -74,7 +74,7 @@ export default function Home() {
                 
                 <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-zinc-100">
                   <div className="text-sm text-secondary font-bold mb-2">Apertura Tesseramenti</div>
-                  <h3 className="text-xl font-bold text-zinc-800 mb-2">Campagna Abbonamenti 25/26</h3>
+                  <h3 className="text-xl font-bold text-zinc-800 mb-2">Campagna Abbonamenti 26/27</h3>
                   <p className="text-zinc-600 mb-4">
                     È ufficialmente aperta la campagna tesseramenti per la nuova stagione sportiva. Assicurati il tuo posto e i gadget esclusivi del club.
                   </p>
