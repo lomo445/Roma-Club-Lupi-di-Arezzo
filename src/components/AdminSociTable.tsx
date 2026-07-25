@@ -11,6 +11,7 @@ import {
 import { updateMemberNumberAction } from "@/app/actions/updateMemberNumber";
 import { deleteUserAction } from "@/app/actions/deleteUser";
 import { sendReminderAction } from "@/app/actions/sendReminder";
+import { approveUserAction } from "@/app/actions/approveUser";
 import Link from "next/link";
 
 type Socio = {
@@ -27,15 +28,23 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
   const [data, setData] = useState(() => [...initialData]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const handleApprove = (id: string) => {
-    setData((old) =>
-      old.map((row) => {
-        if (row.id === id) {
-          return { ...row, status: "ACTIVE" };
-        }
-        return row;
-      })
-    );
+  const handleApprove = async (id: string) => {
+    if (!confirm("Confermi di aver ricevuto il pagamento in contanti da questo socio? La sua tessera verrà attivata.")) return;
+    
+    const res = await approveUserAction(id);
+    if (res.success) {
+      setData((old) =>
+        old.map((row) => {
+          if (row.id === id) {
+            return { ...row, status: "ACTIVE" };
+          }
+          return row;
+        })
+      );
+      alert("Tessera approvata e attivata con successo!");
+    } else {
+      alert(res.error || "Errore durante l'approvazione.");
+    }
   };
 
   const handleEditMemberNumber = async (id: string, currentNumber: number) => {

@@ -5,14 +5,16 @@ import Link from "next/link";
 import QRCode from "react-qr-code";
 import { User, Phone, MapPin, Calendar, CreditCard, CheckCircle, XCircle } from "lucide-react";
 
-export default async function DettaglioSocioPage({ params }: { params: { id: string } }) {
+export default async function DettaglioSocioPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN") {
     redirect("/dashboard");
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { subscriptions: true }
   });
 
