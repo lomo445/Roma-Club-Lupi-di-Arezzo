@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { registerUserAction } from "@/app/actions/register";
 import { verifyAdultAction } from "@/app/actions/verifyAdult";
-import { Trash2, UserPlus, User, Loader2 } from "lucide-react";
+import { Trash2, UserPlus, User, Loader2, HelpCircle } from "lucide-react";
 
 const memberSchema = z.object({
   email: z.string().email("Inserire un'email valida"),
@@ -179,7 +179,12 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Email (per il login) *</label>
+                      <label className="flex items-center text-sm font-medium text-zinc-700 mb-1">
+                        Email (per il login) *
+                        <span title="Serve per accedere alla tua area riservata sull'app e mostrare la tessera digitale in sede (non ti manderemo spam)." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
+                          <HelpCircle size={16} />
+                        </span>
+                      </label>
                       <input
                         type="email"
                         {...register(`members.${index}.email`)}
@@ -189,7 +194,12 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Password *</label>
+                      <label className="flex items-center text-sm font-medium text-zinc-700 mb-1">
+                        Password *
+                        <span title="Crea una password (minimo 6 caratteri). Ti servirà, insieme all'email, per fare il login nell'app del club e vedere i tuoi dati." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
+                          <HelpCircle size={16} />
+                        </span>
+                      </label>
                       <input
                         type="password"
                         {...register(`members.${index}.password`)}
@@ -256,10 +266,15 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                       </div>
 
                       <div className="flex-[2]">
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">Scegli il tipo di Tessera *</label>
+                        <label className="flex items-center text-sm font-bold text-zinc-700 mb-2">
+                          Scegli il tipo di Tessera *
+                          <span title="Adulto: Soci ordinari >18 anni. Ridotto (Minore): Ragazzi <18 anni. Familiare: Tariffa agevolata per i parenti di un socio Adulto." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
+                            <HelpCircle size={18} />
+                          </span>
+                        </label>
                         <div className="grid grid-cols-3 gap-2">
                           <button type="button" onClick={() => updateMember(index, "tipoTessera", "Adulto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Adulto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Adulto ({priceAdult}€)</button>
-                          <button type="button" onClick={() => updateMember(index, "tipoTessera", "Ridotto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Ridotto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Ridotto ({priceReduced}€)</button>
+                          <button type="button" onClick={() => updateMember(index, "tipoTessera", "Ridotto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Ridotto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Ridotto / Minore ({priceReduced}€)</button>
                           <button type="button" onClick={() => updateMember(index, "tipoTessera", "Familiare")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Familiare' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Familiare ({priceFamily}€)</button>
                         </div>
                         {errors.members?.[index]?.tipoTessera && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.tipoTessera?.message}</p>}
