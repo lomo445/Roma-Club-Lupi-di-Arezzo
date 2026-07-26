@@ -23,7 +23,7 @@ export default async function IscrivitiPage() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-black mb-4 drop-shadow-md">Tesseramento 26/27</h1>
           <p className="text-lg md:text-xl font-medium max-w-2xl text-zinc-200">
-            Assicurati il tuo posto al Circolo Oasi di Chiani e ottieni la prelazione per le trasferte.
+            Assicurati il tuo posto al Circolo Oasi di Chiani ed entra nel branco. I posti per le notti magiche vanno a ruba!
           </p>
         </div>
       </div>
