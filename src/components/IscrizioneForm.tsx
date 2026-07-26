@@ -10,6 +10,16 @@ import { registerUserAction } from "@/app/actions/register";
 import { verifyAdultAction } from "@/app/actions/verifyAdult";
 import { Trash2, UserPlus, User, Loader2, HelpCircle } from "lucide-react";
 
+const InfoTooltip = ({ text }: { text: string }) => (
+  <div className="relative group inline-flex items-center ml-2 cursor-help">
+    <HelpCircle size={16} className="text-zinc-400 group-hover:text-primary transition-colors" />
+    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-48 sm:w-64 p-3 bg-zinc-800 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal pointer-events-none leading-relaxed">
+      {text}
+      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-zinc-800"></div>
+    </div>
+  </div>
+);
+
 const memberSchema = z.object({
   email: z.string().email("Inserire un'email valida"),
   password: z.string().min(6, "Minimo 6 caratteri"),
@@ -181,9 +191,7 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                     <div>
                       <label className="flex items-center text-sm font-medium text-zinc-700 mb-1">
                         Email (per il login) *
-                        <span title="Serve per accedere alla tua area riservata sull'app e mostrare la tessera digitale in sede (non ti manderemo spam)." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
-                          <HelpCircle size={16} />
-                        </span>
+                        <InfoTooltip text="Serve per accedere alla tua area riservata sull'app e mostrare la tessera digitale in sede (non ti manderemo spam)." />
                       </label>
                       <input
                         type="email"
@@ -196,9 +204,7 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                     <div>
                       <label className="flex items-center text-sm font-medium text-zinc-700 mb-1">
                         Password *
-                        <span title="Crea una password (minimo 6 caratteri). Ti servirà, insieme all'email, per fare il login nell'app del club e vedere i tuoi dati." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
-                          <HelpCircle size={16} />
-                        </span>
+                        <InfoTooltip text="Crea una password (minimo 6 caratteri). Ti servirà, insieme all'email, per fare il login nell'app del club e vedere i tuoi dati." />
                       </label>
                       <input
                         type="password"
@@ -268,9 +274,7 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                       <div className="flex-[2]">
                         <label className="flex items-center text-sm font-bold text-zinc-700 mb-2">
                           Scegli il tipo di Tessera *
-                          <span title="Adulto: Soci ordinari >18 anni. Ridotto (Minore): Ragazzi <18 anni. Familiare: Tariffa agevolata per i parenti di un socio Adulto." className="text-zinc-400 hover:text-primary cursor-help inline-flex items-center ml-2 transition-colors">
-                            <HelpCircle size={18} />
-                          </span>
+                          <InfoTooltip text="Adulto: Soci ordinari >18 anni. Ridotto (Minore): Ragazzi <18 anni. Familiare: Tariffa agevolata per i parenti di un socio Adulto." />
                         </label>
                         <div className="grid grid-cols-3 gap-2">
                           <button type="button" onClick={() => updateMember(index, "tipoTessera", "Adulto")} className={`p-2 border rounded-lg text-sm font-bold ${members[index].tipoTessera === 'Adulto' ? 'bg-primary text-white border-primary' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'}`}>Adulto ({priceAdult}€)</button>
