@@ -54,16 +54,16 @@ export async function Navbar() {
         <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none"></div>
         <div className="animate-marquee font-black text-secondary tracking-widest flex items-center gap-6 text-[10px] sm:text-xs uppercase opacity-90">
           <span>🐺 FORZA ROMA</span>
-          <span className="text-white">❤️</span>
-          <span>🟡🔴 LUPI DI AREZZO</span>
-          <span className="text-white">❤️</span>
+          <span className="text-white">❤️💛</span>
+          <span>LUPI DI AREZZO</span>
+          <span className="text-white">❤️💛</span>
           <span>🐺 FORZA ROMA</span>
-          <span className="text-white">❤️</span>
-          <span>🟡🔴 LUPI DI AREZZO</span>
-          <span className="text-white">❤️</span>
+          <span className="text-white">❤️💛</span>
+          <span>LUPI DI AREZZO</span>
+          <span className="text-white">❤️💛</span>
           <span>🐺 SEMPRE AL TUO FIANCO</span>
-          <span className="text-white">❤️</span>
-          <span>🟡🔴 LUPI DI AREZZO</span>
+          <span className="text-white">❤️💛</span>
+          <span>LUPI DI AREZZO</span>
         </div>
         <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none"></div>
       </div>
