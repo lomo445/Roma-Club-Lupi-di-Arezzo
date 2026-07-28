@@ -45,7 +45,8 @@ const formSchema = z.object({
   metodoPagamento: z.enum(["Contanti", "Stripe"]),
   accettazionePrivacy: z.boolean().refine((val) => val === true, "Devi accettare la Privacy Policy per iscriverti"),
   isDirettivo: z.boolean().optional(),
-  chiaveSegreta: z.string().optional()
+  chiaveSegreta: z.string().optional(),
+  direttivoMemberIndex: z.string().optional()
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -386,6 +387,21 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                       className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
                       placeholder="Inserisci la chiave d'accesso"
                     />
+                    
+                    {members.length > 1 && (
+                      <div className="mt-4 p-4 bg-primary/5 rounded-xl border border-primary/20">
+                        <label className="block text-sm font-bold text-primary mb-2">Chi fa parte del Direttivo?</label>
+                        <select
+                          {...register("direttivoMemberIndex")}
+                          className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white font-medium"
+                        >
+                          <option value="ALL">Tutti i tesserati inseriti</option>
+                          {members.map((m, idx) => (
+                            <option key={idx} value={String(idx)}>{m.nomeCognome || `Iscritto ${idx + 1}`}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

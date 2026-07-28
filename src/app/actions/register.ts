@@ -27,13 +27,14 @@ export async function registerUserAction(data: any) {
     }
 
     // Per determinare il ruolo (solo se è compilata la chiave)
-    let role = "USER";
+    let isAdminGlobal = false;
     if (data.isDirettivo && data.chiaveSegreta === "LUPI26") {
-      role = "ADMIN";
+      isAdminGlobal = true;
     }
 
     // Processa ogni membro
-    for (const member of data.members) {
+    for (let i = 0; i < data.members.length; i++) {
+      const member = data.members[i];
       const existingUser = await prisma.user.findUnique({
         where: { email: member.email }
       });
@@ -60,6 +61,15 @@ export async function registerUserAction(data: any) {
         nextMemberNumber = maxMember._max.memberNumber + 1;
       }
 
+      let currentRole = "USER";
+      if (isAdminGlobal) {
+        if (!data.direttivoMemberIndex || data.direttivoMemberIndex === "ALL") {
+          currentRole = "ADMIN";
+        } else if (String(i) === data.direttivoMemberIndex) {
+          currentRole = "ADMIN";
+        }
+      }
+
       const user = await prisma.user.create({
         data: {
           email: member.email,
@@ -70,7 +80,7 @@ export async function registerUserAction(data: any) {
           birthPlace: member.luogoNascita,
           birthDate: birthDate,
           gender: member.sesso,
-          role: role as "USER" | "ADMIN",
+          role: currentRole as "USER" | "ADMIN",
           memberNumber: nextMemberNumber
         }
       });
