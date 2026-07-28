@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import calendario from '@/data/calendario-roma.json';
 
 export default function Home() {
   return (
@@ -50,17 +51,27 @@ export default function Home() {
             {/* Prossima Partita & Calendario */}
             <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-primary h-full">
               <h2 className="text-3xl font-bold text-primary mb-6 flex items-center">
-                <span className="bg-primary/10 p-2 rounded-lg mr-4">🗓</span> Calendario 2026/2027
+                <span className="bg-primary/10 p-2 rounded-lg mr-4">🗓</span> Prossime Partite
               </h2>
-              <div className="flex flex-col items-center justify-center p-6 bg-zinc-50 rounded-xl border border-zinc-100 mb-6">
-                <div className="text-sm font-semibold text-zinc-500 mb-2 uppercase tracking-wider">
-                  Stagione 26/27 - Serie A & Champions
-                </div>
-                <div className="text-lg font-medium text-zinc-700 text-center">
-                  I calendari ufficiali non sono ancora stati sorteggiati.<br/>
-                  <span className="text-sm text-zinc-500 mt-2 block">Torna a trovarci a Luglio per tutte le date!</span>
-                </div>
+              
+              <div className="space-y-4 mb-6">
+                {calendario.slice(0, 4).map((match, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-4 bg-zinc-50 rounded-xl border border-zinc-100 hover:border-primary/30 transition-colors">
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                        Giornata {match.giornata} • {match.data}
+                      </span>
+                      <div className="text-lg font-bold text-zinc-800">
+                        {match.squadraCasa} - {match.squadraTrasferta}
+                      </div>
+                    </div>
+                    <div className="bg-primary text-white text-sm font-bold px-3 py-1 rounded-lg shadow-sm whitespace-nowrap ml-4">
+                      {match.ora}
+                    </div>
+                  </div>
+                ))}
               </div>
+
               <div className="p-4 bg-secondary/20 rounded-xl border border-secondary/30 text-center">
                 <p className="font-bold text-primary">📍 Sede Visiva: Circolo Oasi Chiani</p>
                 <p className="text-sm text-zinc-700 mt-1">Vieni a vedere le partite insieme a noi in sede!</p>

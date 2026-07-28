@@ -1,0 +1,268 @@
+[
+  {
+    "giornata": null,
+    "data": "Lunedì 24 Ago 2026",
+    "ora": "20:45",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Fiorentina"
+  },
+  {
+    "giornata": 2,
+    "data": "Lunedì 31 Ago 2026",
+    "ora": "18:30",
+    "squadraCasa": "Lecce",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 3,
+    "data": "Sabato 5 Set 2026",
+    "ora": "20:45",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Atalanta"
+  },
+  {
+    "giornata": 4,
+    "data": "Domenica 13 Set 2026",
+    "ora": "12:30",
+    "squadraCasa": "Torino",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 5,
+    "data": "Sabato 19 Set 2026",
+    "ora": "18:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Inter"
+  },
+  {
+    "giornata": 6,
+    "data": "Domenica 11 Ott 2026",
+    "ora": "15:00",
+    "squadraCasa": "Como",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 7,
+    "data": "Sabato 17 Ott 2026",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Genoa"
+  },
+  {
+    "giornata": 8,
+    "data": "Domenica 25 Ott 2026",
+    "ora": "15:00",
+    "squadraCasa": "Napoli",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 9,
+    "data": "Mercoledì 28 Ott 2026",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Cagliari"
+  },
+  {
+    "giornata": 10,
+    "data": "Domenica 1 Nov 2026",
+    "ora": "15:00",
+    "squadraCasa": "Udinese",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 11,
+    "data": "Domenica 8 Nov 2026",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Sassuolo"
+  },
+  {
+    "giornata": 12,
+    "data": "Domenica 22 Nov 2026",
+    "ora": "15:00",
+    "squadraCasa": "Parma",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 13,
+    "data": "Domenica 29 Nov 2026",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Monza"
+  },
+  {
+    "giornata": 14,
+    "data": "Domenica 6 Dic 2026",
+    "ora": "15:00",
+    "squadraCasa": "Bologna",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 15,
+    "data": "Domenica 13 Dic 2026",
+    "ora": "15:00",
+    "squadraCasa": "Lazio",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 16,
+    "data": "Domenica 20 Dic 2026",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Juventus"
+  },
+  {
+    "giornata": 17,
+    "data": "Domenica 3 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Frosinone"
+  },
+  {
+    "giornata": 18,
+    "data": "Mercoledì 6 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Venezia",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 19,
+    "data": "Domenica 10 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Milan"
+  },
+  {
+    "giornata": 20,
+    "data": "Domenica 17 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Atalanta",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 21,
+    "data": "Domenica 24 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Udinese"
+  },
+  {
+    "giornata": 22,
+    "data": "Domenica 31 Gen 2027",
+    "ora": "15:00",
+    "squadraCasa": "Monza",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 23,
+    "data": "Domenica 7 Feb 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Torino"
+  },
+  {
+    "giornata": 24,
+    "data": "Domenica 14 Feb 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Parma"
+  },
+  {
+    "giornata": 25,
+    "data": "Domenica 21 Feb 2027",
+    "ora": "15:00",
+    "squadraCasa": "Sassuolo",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 26,
+    "data": "Domenica 28 Feb 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Venezia"
+  },
+  {
+    "giornata": 27,
+    "data": "Domenica 7 Mar 2027",
+    "ora": "15:00",
+    "squadraCasa": "Juventus",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 28,
+    "data": "Domenica 14 Mar 2027",
+    "ora": "15:00",
+    "squadraCasa": "Genoa",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 29,
+    "data": "Domenica 21 Mar 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Lecce"
+  },
+  {
+    "giornata": 30,
+    "data": "Domenica 4 Apr 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Bologna"
+  },
+  {
+    "giornata": 31,
+    "data": "Domenica 11 Apr 2027",
+    "ora": "15:00",
+    "squadraCasa": "Inter",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 32,
+    "data": "Domenica 18 Apr 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Lazio"
+  },
+  {
+    "giornata": 33,
+    "data": "Domenica 25 Apr 2027",
+    "ora": "15:00",
+    "squadraCasa": "Frosinone",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 34,
+    "data": "Domenica 2 Mag 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Napoli"
+  },
+  {
+    "giornata": 35,
+    "data": "Domenica 9 Mag 2027",
+    "ora": "15:00",
+    "squadraCasa": "Fiorentina",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 36,
+    "data": "Domenica 16 Mag 2027",
+    "ora": "15:00",
+    "squadraCasa": "Milan",
+    "squadraTrasferta": "Roma"
+  },
+  {
+    "giornata": 37,
+    "data": "Domenica 23 Mag 2027",
+    "ora": "15:00",
+    "squadraCasa": "Roma",
+    "squadraTrasferta": "Como"
+  },
+  {
+    "giornata": 38,
+    "data": "Domenica 30 Mag 2027",
+    "ora": "15:00",
+    "squadraCasa": "Cagliari",
+    "squadraTrasferta": "Roma"
+  }
+]
