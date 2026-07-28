@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { auth } from "@/auth";
+import { Marquee } from "@/components/Marquee";
 
 export async function Navbar() {
   const session = await auth();
@@ -49,24 +50,7 @@ export async function Navbar() {
         </div>
       </div>
 
-      {/* Marquee Ticker (Visibile ovunque, inclusi smartphone) */}
-      <div className="w-full bg-black/20 overflow-hidden relative flex items-center h-8 border-t border-white/10">
-        <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none"></div>
-        <div className="animate-marquee font-black text-secondary tracking-widest flex items-center gap-6 text-[10px] sm:text-xs uppercase opacity-90">
-          <span>🐺 FORZA ROMA</span>
-          <span className="text-white">❤️💛</span>
-          <span>LUPI DI AREZZO</span>
-          <span className="text-white">❤️💛</span>
-          <span>🐺 FORZA ROMA</span>
-          <span className="text-white">❤️💛</span>
-          <span>LUPI DI AREZZO</span>
-          <span className="text-white">❤️💛</span>
-          <span>🐺 SEMPRE AL TUO FIANCO</span>
-          <span className="text-white">❤️💛</span>
-          <span>LUPI DI AREZZO</span>
-        </div>
-        <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none"></div>
-      </div>
+      <Marquee />
     </nav>
   );
 }
