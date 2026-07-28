@@ -16,13 +16,27 @@ export function Footer() {
             <li><a href="/chi-siamo" className="hover:text-secondary transition-colors">Chi Siamo</a></li>
             <li><a href="/iscriviti" className="hover:text-secondary transition-colors">Tesseramento</a></li>
             <li><a href="/login" className="hover:text-secondary transition-colors">Area Soci</a></li>
+            <li><a href="/privacy" className="hover:text-secondary transition-colors">Privacy Policy</a></li>
           </ul>
         </div>
         <div>
           <h4 className="text-lg font-semibold text-white mb-4">Contatti</h4>
-          <ul className="space-y-2 text-sm">
-            <li>Email: romaclublupidiarezzo@gmail.com</li>
-            <li>Sede: Circolo Oasi Chiani, Ponte a Chiani 1, Arezzo</li>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-center gap-2">
+              <span>📧</span> 
+              <a href="mailto:romaclublupidiarezzo@gmail.com" className="hover:text-secondary transition-colors">romaclublupidiarezzo@gmail.com</a>
+            </li>
+            <li className="flex items-center gap-2">
+              <span>📍</span>
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=Circolo+Oasi+Chiani+Arezzo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-secondary transition-colors underline underline-offset-2"
+              >
+                Apri in Mappe
+              </a>
+            </li>
           </ul>
         </div>
       </div>

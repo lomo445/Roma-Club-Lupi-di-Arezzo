@@ -40,10 +40,20 @@ export default function ChiSiamo() {
               per vivere i 90 minuti di passione nel migliore dei modi. È il luogo dove ci ritroviamo non solo per le partite, 
               ma anche per cene sociali, riunioni del direttivo ed eventi speciali.
             </p>
-            <div className="bg-zinc-50 p-6 rounded-lg border border-zinc-200 my-8">
-              <h3 className="font-bold text-lg mb-2">Indirizzo Sede</h3>
-              <p className="text-zinc-600 font-medium">Circolo Oasi Chiani</p>
-              <p className="text-zinc-600">Ponte a Chiani 1, Arezzo (AR)</p>
+            <div className="bg-zinc-50 p-6 rounded-lg border border-zinc-200 my-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-lg mb-2">Indirizzo Sede</h3>
+                <p className="text-zinc-600 font-medium">Circolo Oasi Chiani</p>
+                <p className="text-zinc-600">Ponte a Chiani 1, Arezzo (AR)</p>
+              </div>
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=Circolo+Oasi+Chiani+Arezzo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-primary text-white font-bold py-3 px-6 rounded-lg shadow hover:bg-primary/90 transition-colors text-center whitespace-nowrap"
+              >
+                Naviga verso la Sede 📍
+              </a>
             </div>
           </div>
         </div>
