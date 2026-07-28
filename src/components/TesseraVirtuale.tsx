@@ -5,9 +5,10 @@ import QRCode from "react-qr-code";
 interface TesseraVirtualeProps {
   memberNumber: number;
   name: string;
+  isAdmin?: boolean;
 }
 
-export function TesseraVirtuale({ memberNumber, name }: TesseraVirtualeProps) {
+export function TesseraVirtuale({ memberNumber, name, isAdmin = false }: TesseraVirtualeProps) {
   // Il QR code contiene un URL o un payload JSON verificabile dall'app scanner dell'Admin.
   // Es: un link al check-in con l'ID utente.
   const qrData = JSON.stringify({ action: "check-in", memberNumber, timestamp: Date.now() });
@@ -35,7 +36,14 @@ export function TesseraVirtuale({ memberNumber, name }: TesseraVirtualeProps) {
       </div>
 
       <div className="relative z-10">
-        <div className="text-xs uppercase opacity-80 mb-1">Socio Tesserato</div>
+        <div className="flex items-center gap-2 mb-1">
+          <div className="text-xs uppercase opacity-80">Socio Tesserato</div>
+          {isAdmin && (
+            <div className="bg-secondary text-black text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest shadow-sm">
+              Direttivo
+            </div>
+          )}
+        </div>
         <div className="text-2xl font-bold mb-2">{name}</div>
         <div className="flex justify-between items-end border-t border-white/20 pt-4 mt-4">
           <div>

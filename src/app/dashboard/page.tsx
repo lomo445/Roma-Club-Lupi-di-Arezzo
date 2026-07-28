@@ -139,6 +139,7 @@ export default async function DashboardPage() {
               <TesseraVirtuale 
                 name={user.name || "Socio"} 
                 memberNumber={user.memberNumber || 1} 
+                isAdmin={isAdmin}
               />
             </div>
             <div className="md:col-span-8 space-y-6">
