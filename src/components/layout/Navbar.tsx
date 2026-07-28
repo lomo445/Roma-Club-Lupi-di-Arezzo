@@ -18,22 +18,7 @@ export async function Navbar() {
           </div>
         </Link>
 
-        {/* Marquee Animato Centrale */}
-        <div className="hidden lg:flex flex-1 overflow-hidden mx-8 relative items-center h-full">
-          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none"></div>
-          <div className="animate-marquee font-black text-secondary tracking-widest flex items-center gap-6 text-sm uppercase opacity-90">
-            <span>🐺 FORZA ROMA</span>
-            <span className="text-white/50">•</span>
-            <span>🟡🔴 LUPI DI AREZZO</span>
-            <span className="text-white/50">•</span>
-            <span>🐺 FORZA ROMA</span>
-            <span className="text-white/50">•</span>
-            <span>🟡🔴 LUPI DI AREZZO</span>
-            <span className="text-white/50">•</span>
-            <span>🐺 SEMPRE AL TUO FIANCO</span>
-          </div>
-          <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none"></div>
-        </div>
+
 
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-xs md:text-sm font-bold w-full lg:w-auto">
           <Link href="/" className="px-3 py-2 rounded-md hover:bg-white/10 transition-colors">
@@ -62,6 +47,25 @@ export async function Navbar() {
             </Link>
           )}
         </div>
+      </div>
+
+      {/* Marquee Ticker (Visibile ovunque, inclusi smartphone) */}
+      <div className="w-full bg-black/20 overflow-hidden relative flex items-center h-8 border-t border-white/10">
+        <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none"></div>
+        <div className="animate-marquee font-black text-secondary tracking-widest flex items-center gap-6 text-[10px] sm:text-xs uppercase opacity-90">
+          <span>🐺 FORZA ROMA</span>
+          <span className="text-white">❤️</span>
+          <span>🟡🔴 LUPI DI AREZZO</span>
+          <span className="text-white">❤️</span>
+          <span>🐺 FORZA ROMA</span>
+          <span className="text-white">❤️</span>
+          <span>🟡🔴 LUPI DI AREZZO</span>
+          <span className="text-white">❤️</span>
+          <span>🐺 SEMPRE AL TUO FIANCO</span>
+          <span className="text-white">❤️</span>
+          <span>🟡🔴 LUPI DI AREZZO</span>
+        </div>
+        <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none"></div>
       </div>
     </nav>
   );
