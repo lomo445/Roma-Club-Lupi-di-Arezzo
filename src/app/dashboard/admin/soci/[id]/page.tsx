@@ -54,6 +54,11 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
                 <User size={40} className="text-zinc-400" />
               </div>
               <h1 className="text-2xl font-bold text-zinc-800">{user.name} {user.surname}</h1>
+              {user.role === "ADMIN" && (
+                <div className="inline-block bg-secondary text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest mt-1 mb-2 shadow-sm">
+                  Membro Direttivo
+                </div>
+              )}
               <p className="text-zinc-500 mb-4">{user.email}</p>
               
               <div className="inline-block bg-primary text-white font-bold px-4 py-1 rounded-full text-sm mb-6">
