@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import QRCode from "react-qr-code";
 import { User, Phone, MapPin, Calendar, CreditCard, CheckCircle, XCircle } from "lucide-react";
+import { ToggleRoleButton } from "./ToggleRoleButton";
 
 export default async function DettaglioSocioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -69,6 +70,10 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
                 <QRCode value={qrData} size={150} level="H" />
               </div>
               <p className="text-xs text-zinc-400 mt-3 font-medium">QR Code Ufficiale Socio</p>
+
+              <div className="mt-8 pt-6 border-t border-zinc-100">
+                <ToggleRoleButton userId={user.id} currentRole={user.role} />
+              </div>
             </div>
           </div>
 

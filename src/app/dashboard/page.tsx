@@ -4,6 +4,7 @@ import { TesseraVirtuale } from "@/components/TesseraVirtuale";
 import { LogoutButton } from "@/components/LogoutButton";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { PaymentButton } from "./PaymentButton";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -17,6 +18,11 @@ export default async function DashboardPage() {
 
   const userAttendances = await prisma.attendance.count({
     where: { userId: user.id }
+  });
+
+  const userSub = await prisma.subscription.findFirst({
+    where: { userId: user.id },
+    orderBy: { createdAt: 'desc' }
   });
 
   let stats = null;
@@ -147,13 +153,32 @@ export default async function DashboardPage() {
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-zinc-100 flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-bold text-zinc-800 mb-4">Stato Abbonamento</h3>
-                  <div className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
-                    <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-                    <div>
-                      <div className="font-bold text-green-800">Tessera Attiva</div>
-                      <div className="text-sm text-green-600">Valida per l'intera stagione 26/27</div>
+                  
+                  {userSub?.status === "ACTIVE" ? (
+                    <div className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                      <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                      <div>
+                        <div className="font-bold text-green-800">Tessera Attiva</div>
+                        <div className="text-sm text-green-600">Valida per l'intera stagione 26/27</div>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex flex-col p-4 bg-yellow-50 border border-yellow-200 rounded-lg mb-4">
+                      <div className="flex items-center mb-2">
+                        <div className="w-3 h-3 bg-yellow-500 rounded-full mr-3 animate-pulse"></div>
+                        <div>
+                          <div className="font-bold text-yellow-800">In Attesa di Pagamento</div>
+                          <div className="text-sm text-yellow-700">La tua tessera non è ancora attiva.</div>
+                        </div>
+                      </div>
+                      {userSub?.method === "Stripe" && <PaymentButton />}
+                      {userSub?.method === "Contanti" && (
+                        <div className="mt-2 text-sm text-yellow-800 bg-yellow-100 p-2 rounded">
+                          Hai scelto il pagamento in contanti. Passa in sede per saldare l'importo ({userSub.price}€) e attivare la tessera.
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <Link href="/dashboard/profilo" className="text-center w-full block py-2 px-4 border border-zinc-300 rounded-lg text-sm font-bold text-zinc-700 hover:bg-zinc-50 transition-colors">
                   Modifica Dati Profilo
