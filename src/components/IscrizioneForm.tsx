@@ -24,7 +24,7 @@ const memberSchema = z.object({
   email: z.string().email("Inserire un'email valida"),
   password: z.string().min(6, "Minimo 6 caratteri"),
   nomeCognome: z.string().min(3, "Inserire Nome e Cognome"),
-  dataNascita: z.string().min(8, "Inserire Data di Nascita"),
+  dataNascita: z.string().regex(/^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-](19|20)\d\d$/, "Usa il formato GG/MM/AAAA (es. 15/08/1975)"),
   luogoNascita: z.string().min(2, "Inserire Luogo di Nascita"),
   sesso: z.enum(["Maschio", "Femmina", "Altro"], { message: "Seleziona sesso" }),
   telefono: z.string().min(5, "Inserire Numero di Telefono"),
@@ -204,13 +204,14 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
 
                     <div>
                       <label className="flex items-center text-sm font-medium text-zinc-700 mb-1">
-                        Password *
-                        <InfoTooltip text="Crea una password (minimo 6 caratteri). Ti servirà, insieme all'email, per fare il login nell'app del club e vedere i tuoi dati." />
+                        Crea una tua Password *
+                        <InfoTooltip text="Inventa una nuova password personale (minimo 6 caratteri). Ti servirà, insieme all'email, per fare il login nell'app del club e vedere i tuoi dati." />
                       </label>
                       <input
                         type="password"
                         {...register(`members.${index}.password`)}
                         className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                        placeholder="Min. 6 caratteri"
                       />
                       {errors.members?.[index]?.password && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.password?.message}</p>}
                     </div>
@@ -238,9 +239,10 @@ export default function IscrizioneForm({ priceAdult, priceReduced, priceFamily }
                     <div>
                       <label className="block text-sm font-medium text-zinc-700 mb-1">Data di Nascita *</label>
                       <input
-                        type="date"
+                        type="text"
                         {...register(`members.${index}.dataNascita`)}
                         className="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+                        placeholder="GG/MM/AAAA (es. 25/08/1980)"
                       />
                       {errors.members?.[index]?.dataNascita && <p className="text-red-500 text-sm mt-1">{errors.members[index]?.dataNascita?.message}</p>}
                     </div>

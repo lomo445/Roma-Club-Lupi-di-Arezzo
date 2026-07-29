@@ -49,7 +49,18 @@ export async function registerUserAction(data: any) {
       
       let birthDate = null;
       if (member.dataNascita) {
-        birthDate = new Date(member.dataNascita);
+        const dateStr = member.dataNascita;
+        if (dateStr.includes("/") || dateStr.includes("-")) {
+          const sep = dateStr.includes("/") ? "/" : "-";
+          const parts = dateStr.split(sep);
+          if (parts[0].length === 2 && parts[2].length === 4) { // DD/MM/YYYY
+            birthDate = new Date(`${parts[2]}-${parts[1]}-${parts[0]}T12:00:00Z`);
+          } else {
+            birthDate = new Date(dateStr); // fallback se era YYYY-MM-DD
+          }
+        } else {
+          birthDate = new Date(dateStr);
+        }
       }
 
       const maxMember = await prisma.user.aggregate({
