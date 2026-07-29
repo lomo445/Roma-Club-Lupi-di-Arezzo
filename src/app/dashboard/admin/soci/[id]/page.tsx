@@ -5,6 +5,8 @@ import Link from "next/link";
 import QRCode from "react-qr-code";
 import { User, Phone, MapPin, Calendar, CreditCard, CheckCircle, XCircle } from "lucide-react";
 import { ToggleRoleButton } from "./ToggleRoleButton";
+import { AdminResetPasswordButton } from "./AdminResetPasswordButton";
+import { AdminChangePaymentMethod } from "./AdminChangePaymentMethod";
 
 export default async function DettaglioSocioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -73,6 +75,7 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
 
               <div className="mt-8 pt-6 border-t border-zinc-100">
                 <ToggleRoleButton userId={user.id} currentRole={user.role} />
+                <AdminResetPasswordButton userId={user.id} />
               </div>
             </div>
           </div>
@@ -130,6 +133,9 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
                   <div>
                     <p className="text-sm text-zinc-500">Metodo di Pagamento</p>
                     <p className="font-bold text-zinc-800">{sub.method}</p>
+                    {sub.status === "PENDING" && (
+                      <AdminChangePaymentMethod subId={sub.id} currentMethod={sub.method} />
+                    )}
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-sm text-zinc-500 mb-1">Stato Abbonamento</p>
