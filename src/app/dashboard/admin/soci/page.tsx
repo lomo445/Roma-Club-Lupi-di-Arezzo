@@ -11,7 +11,8 @@ export default async function SociPage() {
   }
 
   const users = await prisma.user.findMany({
-    include: { subscriptions: true }
+    include: { subscriptions: true },
+    orderBy: { memberNumber: 'asc' }
   });
 
   const formattedData = users.map(u => ({
