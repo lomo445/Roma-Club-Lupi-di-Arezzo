@@ -20,7 +20,8 @@ export default async function SociPage() {
     memberNumber: u.memberNumber || 0,
     name: `${u.name} ${u.surname}`,
     email: u.email,
-    status: (u.subscriptions && u.subscriptions.length > 0) ? u.subscriptions[0].status : "PENDING"
+    status: (u.subscriptions && u.subscriptions.length > 0) ? u.subscriptions[0].status : "PENDING",
+    method: (u.subscriptions && u.subscriptions.length > 0) ? u.subscriptions[0].method : "N/D"
   }));
 
   return (
