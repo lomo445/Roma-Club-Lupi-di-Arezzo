@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   createColumnHelper,
   flexRender,
@@ -30,6 +30,10 @@ const columnHelper = createColumnHelper<Socio>();
 export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
   const [data, setData] = useState(() => [...initialData]);
   const [globalFilter, setGlobalFilter] = useState("");
+
+  useEffect(() => {
+    setData([...initialData]);
+  }, [initialData]);
 
   const handleApprove = async (id: string) => {
     if (!confirm("Confermi di aver ricevuto il pagamento in contanti da questo socio? La sua tessera verrà attivata.")) return;
@@ -189,6 +193,13 @@ export function AdminSociTable({ initialData }: { initialData: Socio[] }) {
               className="bg-zinc-200 text-zinc-700 px-3 py-1 rounded text-xs font-bold hover:bg-zinc-300 transition-colors"
             >
               Visualizza
+            </Link>
+
+            <Link 
+              href={`/dashboard/admin/soci/${id}?edit=true`}
+              className="bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1 rounded text-xs font-bold transition-colors"
+            >
+              Modifica
             </Link>
             
             <button

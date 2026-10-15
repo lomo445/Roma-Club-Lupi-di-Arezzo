@@ -7,9 +7,18 @@ import { User, Phone, MapPin, Calendar, CreditCard, CheckCircle, XCircle } from 
 import { ToggleRoleButton } from "./ToggleRoleButton";
 import { AdminResetPasswordButton } from "./AdminResetPasswordButton";
 import { AdminChangePaymentMethod } from "./AdminChangePaymentMethod";
+import { AdminEditMemberModal } from "./AdminEditMemberModal";
 
-export default async function DettaglioSocioPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function DettaglioSocioPage({ 
+  params,
+  searchParams 
+}: { 
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ edit?: string }>;
+}) {
   const { id } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const isEditOpen = resolvedSearchParams.edit === "true";
   
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN") {
@@ -38,6 +47,23 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
 
   const sub = user.subscriptions[0];
   const qrData = JSON.stringify({ memberNumber: user.memberNumber });
+
+  let birthDateFormatted = "";
+  if (user.birthDate) {
+    birthDateFormatted = new Date(user.birthDate).toLocaleDateString("it-IT");
+  }
+
+  const userForModal = {
+    id: user.id,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    phone: user.phone,
+    birthDate: birthDateFormatted,
+    birthPlace: user.birthPlace,
+    gender: user.gender,
+    memberNumber: user.memberNumber,
+  };
 
   return (
     <div className="min-h-screen bg-zinc-50 py-12 px-4">
@@ -73,7 +99,8 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
               </div>
               <p className="text-xs text-zinc-400 mt-3 font-medium">QR Code Ufficiale Socio</p>
 
-              <div className="mt-8 pt-6 border-t border-zinc-100">
+              <div className="mt-8 pt-6 border-t border-zinc-100 space-y-2">
+                <AdminEditMemberModal user={userForModal} variant="button" initialOpen={isEditOpen} />
                 <ToggleRoleButton userId={user.id} currentRole={user.role} />
                 <AdminResetPasswordButton userId={user.id} />
               </div>
@@ -85,9 +112,12 @@ export default async function DettaglioSocioPage({ params }: { params: Promise<{
             
             {/* Anagrafica */}
             <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-6">
-              <h3 className="text-lg font-bold text-zinc-800 mb-4 flex items-center gap-2 border-b pb-2">
-                <User size={20} className="text-primary" /> Anagrafica
-              </h3>
+              <div className="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 className="text-lg font-bold text-zinc-800 flex items-center gap-2">
+                  <User size={20} className="text-primary" /> Anagrafica
+                </h3>
+                <AdminEditMemberModal user={userForModal} variant="header" />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-zinc-500 flex items-center gap-1"><Phone size={14}/> Telefono</p>
